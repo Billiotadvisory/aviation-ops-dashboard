@@ -222,6 +222,74 @@ button,select,input{font:inherit;}
 .kpi-health-meta .health-label{color:#fff;font-size:15px;font-weight:600;}
 .kpi-health-meta .health-sub{color:var(--muted);font-size:12px;margin-top:3px;line-height:1.4;}
 
+/* =========================== HERO METRIC =========================== */
+.hero-metric{
+    background:
+        linear-gradient(135deg,rgba(56,189,248,.18) 0%,rgba(167,139,250,.13) 50%,rgba(52,211,153,.08) 100%),
+        linear-gradient(180deg,var(--panel),var(--panel-2));
+    border:1px solid var(--line-bright);border-radius:18px;
+    padding:24px 28px;display:grid;grid-template-columns:1fr auto;gap:24px;align-items:center;
+    position:relative;overflow:hidden;
+    animation:fade-up .5s ease-out;
+}
+.hero-metric:before{
+    content:"";position:absolute;left:0;top:0;bottom:0;width:5px;
+    background:linear-gradient(180deg,var(--cyan-soft),var(--purple),var(--green));
+}
+.hero-label{color:var(--soft);font-size:11.5px;letter-spacing:1.3px;text-transform:uppercase;font-weight:600;display:flex;align-items:center;gap:8px;}
+.hero-label svg{width:13px;height:13px;color:var(--cyan-soft);}
+.hero-numbers{display:flex;align-items:baseline;gap:12px;margin-top:10px;flex-wrap:wrap;}
+.hero-num{
+    font-size:clamp(36px,5.2vw,60px);font-weight:800;letter-spacing:-1.2px;line-height:1;font-variant-numeric:tabular-nums;
+    background:linear-gradient(180deg,#fff 30%,var(--cyan-soft));-webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.hero-divider{color:var(--muted);font-size:28px;font-weight:300;}
+.hero-target{color:var(--soft);font-size:clamp(18px,2.2vw,24px);font-weight:500;}
+.hero-progress{margin-top:16px;height:10px;border-radius:6px;background:rgba(159,177,200,.13);overflow:hidden;position:relative;}
+.hero-progress-bar{height:100%;background:linear-gradient(90deg,var(--cyan),var(--purple));border-radius:6px;transition:width 1.2s cubic-bezier(.4,0,.2,1);box-shadow:0 0 14px rgba(56,189,248,.4);}
+.hero-stats{margin-top:16px;display:flex;gap:18px;flex-wrap:wrap;align-items:center;color:var(--soft);font-size:13.5px;}
+.hero-stats b{color:#fff;font-weight:700;font-variant-numeric:tabular-nums;}
+.status-pill{padding:4px 12px;border-radius:999px;font-size:11px;letter-spacing:.7px;text-transform:uppercase;font-weight:700;display:inline-flex;align-items:center;gap:5px;}
+.status-pill svg{width:10px;height:10px;}
+.status-strong{background:rgba(52,211,153,.18);color:var(--green);border:1px solid rgba(52,211,153,.4);}
+.status-on-track{background:rgba(56,189,248,.18);color:var(--cyan-soft);border:1px solid rgba(56,189,248,.4);}
+.status-tight{background:rgba(250,204,21,.18);color:var(--yellow);border:1px solid rgba(250,204,21,.4);}
+.status-behind{background:rgba(251,113,133,.18);color:var(--red);border:1px solid rgba(251,113,133,.4);animation:pulse-crit 2.5s ease-in-out infinite;}
+.status-unset{background:rgba(159,177,200,.1);color:var(--muted);border:1px solid var(--line-bright);}
+.hero-side-r{display:flex;flex-direction:column;align-items:flex-end;gap:6px;min-width:140px;}
+.hero-side-r .hero-meta-line{color:var(--muted);font-size:12px;text-align:right;}
+.quota-edit{
+    background:rgba(16,28,49,.7);border:1px solid var(--line-bright);color:var(--cyan-soft);
+    padding:8px 14px;border-radius:9px;font-size:12.5px;cursor:pointer;font-weight:600;display:inline-flex;align-items:center;gap:6px;
+}
+.quota-edit:hover{border-color:var(--cyan);background:rgba(56,189,248,.1);}
+.quota-edit svg{width:13px;height:13px;}
+.quota-input-wrap{display:flex;gap:6px;align-items:center;}
+.quota-input-wrap input{
+    background:rgba(5,11,20,.85);border:1.5px solid var(--cyan);color:#fff;
+    padding:8px 12px;border-radius:9px;font-size:14px;width:140px;text-align:right;font-variant-numeric:tabular-nums;
+    outline:none;
+}
+.quota-input-wrap input:focus{box-shadow:0 0 14px rgba(56,189,248,.3);}
+.quota-input-wrap .btn{padding:7px 11px;font-size:12px;}
+@media (max-width:820px){
+    .hero-metric{grid-template-columns:1fr;padding:20px;}
+    .hero-side-r{align-items:flex-start;}
+    .hero-side-r .hero-meta-line{text-align:left;}
+}
+
+.period-select{
+    background:rgba(16,28,49,.7);color:var(--text);border:1px solid var(--line-bright);
+    padding:9px 30px 9px 14px;border-radius:9px;cursor:pointer;font-size:13px;font-weight:500;
+    appearance:none;-webkit-appearance:none;
+    background-image:linear-gradient(45deg,transparent 50%,var(--cyan-soft) 50%),linear-gradient(135deg,var(--cyan-soft) 50%,transparent 50%);
+    background-position:calc(100% - 14px) 50%,calc(100% - 9px) 50%;
+    background-size:5px 5px;
+    background-repeat:no-repeat;
+}
+.period-select:hover{border-color:var(--cyan);}
+.period-select:focus{outline:none;border-color:var(--cyan);box-shadow:0 0 14px rgba(56,189,248,.2);}
+
 /* =========================== PANELS =========================== */
 .panel{
     background:linear-gradient(180deg,var(--panel),var(--panel-2));
@@ -364,6 +432,11 @@ footer strong{color:var(--soft);}
             <p>Drop your pipeline + meetings. See what's at risk, what's stuck, and what to do next — instantly.</p>
         </div>
         <div class="toolbar">
+            <select class="period-select" id="period-select" title="Time window for all metrics">
+                <option value="quarter">This Quarter</option>
+                <option value="30d">Next 30 Days</option>
+                <option value="all">All Open</option>
+            </select>
             <button class="btn primary" id="btn-sample"><svg><use href="#i-spark"/></svg>Load sample</button>
             <button class="btn ghost" id="btn-aviation"><svg><use href="#i-download"/></svg>Aviation CSV</button>
             <button class="btn ghost" id="btn-saas"><svg><use href="#i-download"/></svg>SaaS CSV</button>
@@ -410,6 +483,8 @@ footer strong{color:var(--soft);}
     <div id="dashboard" class="hidden">
 
         <div class="briefing" id="briefing"></div>
+
+        <div class="hero-metric" id="hero-metric"></div>
 
         <div class="kpi-grid">
             <div class="kpi kpi-health">
@@ -718,30 +793,145 @@ function healthScore(open){
     return Math.max(0,Math.min(100,Math.round(score)));
 }
 
+// ============================================================
+// PERIOD + QUOTA STATE
+// ============================================================
+function getPeriod(){return localStorage.getItem("pipeline.period")||"quarter";}
+function setPeriod(v){localStorage.setItem("pipeline.period",v);}
+function getQuota(){return parseFloat(localStorage.getItem("pipeline.quota")||"0")||0;}
+function setQuotaVal(v){if(v>0)localStorage.setItem("pipeline.quota",String(v));else localStorage.removeItem("pipeline.quota");}
+function periodLabel(){return{quarter:"This Quarter","30d":"Next 30 Days",all:"All Open"}[getPeriod()];}
+function periodEnd(){
+    const p=getPeriod();
+    if(p==="quarter"){
+        const q=Math.floor(TODAY.getMonth()/3);
+        return new Date(TODAY.getFullYear(),q*3+3,0,23,59,59);
+    }
+    if(p==="30d"){const d=new Date(TODAY);d.setDate(d.getDate()+30);return d;}
+    return null;
+}
+function inPeriod(d){
+    const p=getPeriod();
+    if(p==="all")return true;
+    if(!d.close_date)return false;
+    const end=periodEnd();
+    return d.close_date<=end;
+}
+
+function computeHero(openInPeriod){
+    const quota=getQuota();
+    const total=openInPeriod.reduce((s,d)=>s+d.amount,0);
+    const weighted=openInPeriod.reduce((s,d)=>s+d.amount*(d.probability/100||0),0);
+    const sortedByWeight=openInPeriod.slice().sort((a,b)=>b.amount*b.probability-a.amount*a.probability);
+    const top3W=sortedByWeight.slice(0,3).reduce((s,d)=>s+d.amount*d.probability/100,0);
+    const concentration=weighted>0?Math.round(top3W/weighted*100):0;
+    const gap=quota>0?Math.max(0,quota-weighted):0;
+    const coverage=quota>0?total/quota:0;
+    const pctToPlan=quota>0?Math.min(100,weighted/quota*100):0;
+    let status="unset",statusLabel="Set a target";
+    if(quota>0){
+        if(weighted>=quota){status="strong";statusLabel="At plan";}
+        else if(coverage>=3&&weighted>=quota*.85){status="strong";statusLabel="Strong";}
+        else if(coverage>=2&&weighted>=quota*.6){status="on-track";statusLabel="On track";}
+        else if(coverage>=1.5){status="tight";statusLabel="Tight";}
+        else{status="behind";statusLabel="Behind plan";}
+    }
+    return{quota,total,weighted,gap,coverage,pctToPlan,status,statusLabel,concentration,topDeals:sortedByWeight.slice(0,3)};
+}
+
+function renderHero(openInPeriod){
+    const h=computeHero(openInPeriod);
+    const el=document.getElementById("hero-metric");
+    if(h.quota>0){
+        el.innerHTML=`
+        <div class="hero-side">
+            <div class="hero-label"><svg><use href="#i-target"/></svg>Weighted Forecast vs. Plan · ${escapeHTML(periodLabel())}</div>
+            <div class="hero-numbers">
+                <span class="hero-num">${fmtMoney(h.weighted)}</span>
+                <span class="hero-divider">/</span>
+                <span class="hero-target">${fmtMoney(h.quota)} target</span>
+            </div>
+            <div class="hero-progress"><div class="hero-progress-bar" style="width:${h.pctToPlan}%"></div></div>
+            <div class="hero-stats">
+                <span><b>${fmtMoney(h.gap)}</b> gap to plan</span>
+                <span><b>${h.coverage.toFixed(1)}×</b> coverage</span>
+                <span class="status-pill status-${h.status}">${h.statusLabel}</span>
+                ${h.concentration>=50?`<span><b>${h.concentration}%</b> of forecast in top 3 deals</span>`:""}
+            </div>
+        </div>
+        <div class="hero-side-r">
+            <div class="hero-meta-line">${openInPeriod.length} open deal${openInPeriod.length===1?"":"s"} in window</div>
+            <button class="quota-edit" id="edit-quota"><svg><use href="#i-target"/></svg>Edit target</button>
+        </div>`;
+    }else{
+        el.innerHTML=`
+        <div class="hero-side">
+            <div class="hero-label"><svg><use href="#i-target"/></svg>Set a quota to track plan attainment</div>
+            <div class="hero-numbers">
+                <span class="hero-num">${fmtMoney(h.weighted)}</span>
+                <span class="hero-target" style="font-size:16px;">weighted forecast · ${escapeHTML(periodLabel())}</span>
+            </div>
+            <div class="hero-stats">
+                <span><b>${openInPeriod.length}</b> open deals</span>
+                <span><b>${fmtMoney(h.total)}</b> total value</span>
+                ${h.concentration>=50?`<span><b>${h.concentration}%</b> of forecast in top 3 deals</span>`:""}
+            </div>
+        </div>
+        <div class="hero-side-r">
+            <button class="quota-edit" id="edit-quota"><svg><use href="#i-target"/></svg>Set target</button>
+        </div>`;
+    }
+    document.getElementById("edit-quota").addEventListener("click",promptQuota);
+}
+
+function promptQuota(){
+    const cur=getQuota();
+    const wrap=document.querySelector(".hero-side-r");
+    wrap.innerHTML=`
+        <div class="quota-input-wrap"><input type="text" inputmode="numeric" id="quota-input" placeholder="800000" value="${cur||""}"></div>
+        <div class="quota-input-wrap"><button class="btn primary" id="quota-save">Save</button><button class="btn ghost" id="quota-cancel">Cancel</button></div>
+        <div style="font-size:11px;color:var(--muted);max-width:200px;text-align:right;">Quarterly target. Stored in your browser only.</div>`;
+    const input=document.getElementById("quota-input");
+    input.focus();input.select();
+    document.getElementById("quota-save").onclick=()=>{
+        setQuotaVal(parseFloat(input.value.replace(/[$,\s]/g,""))||0);render();
+    };
+    document.getElementById("quota-cancel").onclick=()=>render();
+    input.addEventListener("keydown",e=>{if(e.key==="Enter")document.getElementById("quota-save").click();if(e.key==="Escape")render();});
+}
+
 function buildBriefing(enriched){
     const open=enriched.filter(d=>d.risk.isOpen);
+    const openInPeriod=open.filter(inPeriod);
     if(!open.length)return`<div class="brief-tag">Today</div><div class="brief-headline">No open deals to score.</div>`;
     const todayStr=TODAY.toISOString().slice(0,10);
-    const crits=enriched.filter(d=>d.risk.band==="crit");
-    const highs=enriched.filter(d=>d.risk.band==="high");
-    const pastDue=enriched.filter(d=>d.close_date&&daysBetween(TODAY,d.close_date)<0&&d.risk.isOpen);
-    const star=enriched.slice().filter(d=>d.risk.isOpen&&d.probability>=70).sort((a,b)=>b.amount*b.probability-a.amount*a.probability)[0];
-    const fires=crits.length+highs.length;
+    const fires=openInPeriod.filter(d=>d.risk.band==="crit"||d.risk.band==="high").length;
+    const pastDue=openInPeriod.filter(d=>d.close_date&&daysBetween(TODAY,d.close_date)<0);
+    const star=openInPeriod.slice().filter(d=>d.probability>=70).sort((a,b)=>b.amount*b.probability-a.amount*a.probability)[0];
+    const stuckCount=openInPeriod.filter(d=>d.risk.stuck).length;
+    const quota=getQuota();
+    const hero=computeHero(openInPeriod);
 
     let h="";
-    if(fires===0)h=`Quiet pipeline today. Nothing's burning — focus on momentum.`;
-    else if(fires===1)h=`<span class="cold">1 fire today.</span> Don't let it become two.`;
-    else h=`<span class="cold">${fires} fires today.</span> Triage them before email.`;
+    if(fires===0)h=`Quiet pipeline this period. Nothing's burning — keep momentum.`;
+    else if(fires===1)h=`<span class="cold">1 fire</span> in <b>${escapeHTML(periodLabel())}</b>. Don't let it become two.`;
+    else h=`<span class="cold">${fires} fires</span> in <b>${escapeHTML(periodLabel())}</b>. Triage them before email.`;
 
     let body="";
+    if(quota>0){
+        if(hero.weighted>=quota)body+=`<span class="hot">At plan</span> — ${fmtMoney(hero.weighted)} forecast vs ${fmtMoney(quota)} target. `;
+        else body+=`<span class="cold">${fmtMoney(hero.gap)}</span> behind plan · coverage <b>${hero.coverage.toFixed(1)}×</b>. `;
+    }
     if(pastDue.length){
-        body+=`<b>${pastDue.length}</b> deal${pastDue.length>1?"s":""} slipped past close (${pastDue.slice(0,2).map(d=>escapeHTML(d.deal_name)).join(", ")}${pastDue.length>2?"…":""}) — reset dates this week. `;
+        body+=`<b>${pastDue.length}</b> deal${pastDue.length>1?"s":""} slipped past close (${pastDue.slice(0,2).map(d=>escapeHTML(d.deal_name)).join(", ")}${pastDue.length>2?"…":""}). `;
+    }
+    if(hero.concentration>=50&&openInPeriod.length>=4){
+        body+=`Top 3 deals = <b>${hero.concentration}%</b> of forecast — concentration risk. `;
     }
     if(star)body+=`Strongest mover: <span class="hot">${escapeHTML(star.deal_name)}</span> (${fmtMoney(star.amount)}, ${Math.round(star.probability)}% confidence${star.close_date?`, closes in ${daysBetween(TODAY,star.close_date)}d`:""}). `;
-    const stuckCount=open.filter(d=>d.risk.stuck).length;
-    if(stuckCount)body+=`<b>${stuckCount}</b> deal${stuckCount>1?"s":""} stuck in stage. `;
-    if(!body)body="Everything's moving. Keep the cadence and watch for slippage.";
-    return`<div class="brief-tag">Briefing · ${todayStr}</div><div class="brief-headline">${h}</div><div class="brief-body">${body}</div>`;
+    if(stuckCount)body+=`<b>${stuckCount}</b> stuck in stage. `;
+    if(!body)body="Everything's moving. Keep cadence and watch for slippage.";
+    return`<div class="brief-tag">Briefing · ${todayStr} · ${escapeHTML(periodLabel())}</div><div class="brief-headline">${h}</div><div class="brief-body">${body}</div>`;
 }
 
 function render(){
@@ -754,20 +944,22 @@ function render(){
     document.getElementById("dashboard").classList.remove("hidden");
     const enriched=DEALS.map(d=>{const risk=scoreDeal(d);return{...d,risk,next:nextMove(d,risk)};});
     const open=enriched.filter(d=>d.risk.isOpen);
+    const openInPeriod=open.filter(inPeriod);
 
-    // Briefing
+    // Briefing + Hero
     document.getElementById("briefing").innerHTML=buildBriefing(enriched);
+    renderHero(openInPeriod);
 
-    // KPIs
-    const totalPipe=open.reduce((s,d)=>s+d.amount,0);
-    const weighted=open.reduce((s,d)=>s+d.amount*(d.probability/100||0),0);
-    const atRisk=open.filter(d=>d.risk.band==="crit"||d.risk.band==="high");
+    // KPIs (scoped to period)
+    const totalPipe=openInPeriod.reduce((s,d)=>s+d.amount,0);
+    const weighted=openInPeriod.reduce((s,d)=>s+d.amount*(d.probability/100||0),0);
+    const atRisk=openInPeriod.filter(d=>d.risk.band==="crit"||d.risk.band==="high");
     const atRiskVal=atRisk.reduce((s,d)=>s+d.amount,0);
-    const stuckList=open.filter(d=>d.risk.stuck);
+    const stuckList=openInPeriod.filter(d=>d.risk.stuck);
     const stuckVal=stuckList.reduce((s,d)=>s+d.amount,0);
 
     animateCount(document.getElementById("kpi-pipeline"),totalPipe,v=>fmtMoney(v));
-    document.getElementById("kpi-pipeline-sub").textContent=`${open.length} open deal${open.length===1?"":"s"}`;
+    document.getElementById("kpi-pipeline-sub").textContent=`${openInPeriod.length} open deal${openInPeriod.length===1?"":"s"} · ${periodLabel()}`;
     animateCount(document.getElementById("kpi-weighted"),weighted,v=>fmtMoney(v));
     document.getElementById("kpi-weighted-sub").textContent="Probability-weighted";
     animateCount(document.getElementById("kpi-risk"),atRiskVal,v=>fmtMoney(v));
@@ -775,8 +967,8 @@ function render(){
     animateCount(document.getElementById("kpi-stuck"),stuckList.length,v=>Math.round(v).toString());
     document.getElementById("kpi-stuck-sub").textContent=`${fmtMoney(stuckVal)} not moving`;
 
-    // Health gauge
-    const hs=healthScore(open);
+    // Health gauge (period-scoped)
+    const hs=healthScore(openInPeriod);
     const ringFg=document.getElementById("ring-fg");
     const circumference=2*Math.PI*42;
     ringFg.setAttribute("stroke-dasharray",circumference);
@@ -792,20 +984,20 @@ function render(){
     document.getElementById("health-label").textContent=label;
     document.getElementById("health-sub").textContent=sub;
 
-    // At-Risk
+    // At-Risk (period-scoped)
     const riskSorted=atRisk.slice().sort((a,b)=>(b.risk.score*Math.log10(b.amount+10))-(a.risk.score*Math.log10(a.amount+10)));
     document.getElementById("risk-list").innerHTML=riskSorted.length
         ? riskSorted.map(dealCard).join("")
         : `<div class="tiny-note">No deals flagged at risk. Nice.</div>`;
 
-    // Stuck
+    // Stuck (period-scoped)
     const stuckSorted=stuckList.slice().sort((a,b)=>(b.risk.daysInStage||0)-(a.risk.daysInStage||0));
     document.getElementById("stuck-list").innerHTML=stuckSorted.length
         ? stuckSorted.map(d=>dealCard(d,{compact:true})).join("")
         : `<div class="tiny-note">Nothing stuck right now.</div>`;
 
-    // Next moves
-    const nm=enriched.filter(d=>d.next)
+    // Next moves (period-scoped, only deals in window)
+    const nm=openInPeriod.filter(d=>d.next)
         .sort((a,b)=>(b.risk.score*Math.log10(b.amount+10))-(a.risk.score*Math.log10(a.amount+10)))
         .slice(0,14);
     document.getElementById("nm-list").innerHTML=nm.length
@@ -816,9 +1008,9 @@ function render(){
             </div>`).join("")
         : `<div class="tiny-note">No actions queued.</div>`;
 
-    // Funnel (true funnel shape — descending widths)
+    // Funnel (period-scoped, true funnel shape)
     const stages={};
-    for(const d of open){
+    for(const d of openInPeriod){
         const s=d.stage||"Unspecified";
         if(!stages[s])stages[s]={count:0,value:0,order:stageOrder(s)};
         stages[s].count++;stages[s].value+=d.amount;
@@ -836,9 +1028,9 @@ function render(){
         </div>`;
     }).join("")||`<div class="tiny-note">No open deals.</div>`;
 
-    // Owner pipeline
+    // Owner pipeline (period-scoped)
     const owners={};
-    for(const d of open){
+    for(const d of openInPeriod){
         const o=d.owner||"Unassigned";
         if(!owners[o])owners[o]={total:0,risk:0,count:0};
         owners[o].total+=d.amount;owners[o].count++;
@@ -966,6 +1158,9 @@ document.getElementById("btn-aviation").addEventListener("click",()=>loadFromUrl
 document.getElementById("es-aviation").addEventListener("click",()=>loadFromUrl("samples/aviation-pipeline.csv","samples/aviation-meetings.csv","aviation-pipeline.csv","aviation-meetings.csv"));
 document.getElementById("btn-saas").addEventListener("click",()=>loadFromUrl("samples/saas-pipeline.csv","samples/saas-meetings.csv","saas-pipeline.csv","saas-meetings.csv"));
 document.getElementById("es-saas").addEventListener("click",()=>loadFromUrl("samples/saas-pipeline.csv","samples/saas-meetings.csv","saas-pipeline.csv","saas-meetings.csv"));
+document.getElementById("period-select").value=getPeriod();
+document.getElementById("period-select").addEventListener("change",e=>{setPeriod(e.target.value);render();});
+
 document.getElementById("btn-clear").addEventListener("click",()=>{
     DEALS=[];MEETINGS=[];
     setBadge("badge-pipeline","",false);setBadge("badge-meetings","",false);
