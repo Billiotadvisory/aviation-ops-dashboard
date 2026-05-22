@@ -23,252 +23,484 @@
     --orange:#fb923c;
     --red:#fb7185;
     --purple:#a78bfa;
+    --pink:#f472b6;
 }
 *{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
 body{
-    margin:0;
-    font-family:Arial,Helvetica,sans-serif;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
     color:var(--text);
     background:
-        linear-gradient(rgba(56,189,248,.04) 1px,transparent 1px),
-        linear-gradient(90deg,rgba(56,189,248,.04) 1px,transparent 1px),
-        radial-gradient(circle at 15% 0%,rgba(56,189,248,.13),transparent 34%),
-        radial-gradient(circle at 88% 8%,rgba(167,139,250,.1),transparent 28%),
+        radial-gradient(circle at 12% 8%,rgba(56,189,248,.14),transparent 36%),
+        radial-gradient(circle at 90% 12%,rgba(167,139,250,.12),transparent 32%),
+        radial-gradient(circle at 50% 100%,rgba(244,114,182,.06),transparent 50%),
         var(--bg);
-    background-size:48px 48px,48px 48px,100% 100%,100% 100%,100% 100%;
     min-height:100vh;
+    overflow-x:hidden;
 }
 button,select,input{font:inherit;}
 
-.topbar{
-    padding:18px 24px;
-    background:linear-gradient(90deg,#07111f,#0c1b30 54%,#172554);
+/* =========================== HEADER =========================== */
+.hero{
+    padding:28px 28px 22px;
+    background:
+        linear-gradient(120deg,rgba(56,189,248,.06),rgba(167,139,250,.08) 50%,rgba(244,114,182,.06)),
+        linear-gradient(180deg,#0a1628,#0c1b30 60%,#0a1628);
     border-bottom:1px solid var(--line);
-    display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;
+    position:relative;overflow:hidden;
 }
-.brand h1{margin:0;color:var(--cyan-soft);font-size:clamp(22px,2.6vw,30px);letter-spacing:.4px;}
-.brand p{margin:4px 0 0;color:var(--muted);font-size:13px;}
+.hero:before{
+    content:"";position:absolute;inset:0;
+    background:linear-gradient(120deg,transparent 30%,rgba(56,189,248,.07) 50%,transparent 70%);
+    transform:translateX(-100%);
+    animation:shimmer 9s ease-in-out infinite;
+    pointer-events:none;
+}
+@keyframes shimmer{
+    0%,100%{transform:translateX(-100%);}
+    50%{transform:translateX(100%);}
+}
+.hero-inner{position:relative;display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;}
+.brand{max-width:680px;}
+.brand-tag{
+    display:inline-block;padding:4px 12px;border-radius:999px;
+    background:rgba(56,189,248,.12);border:1px solid rgba(56,189,248,.35);
+    color:var(--cyan-soft);font-size:11px;letter-spacing:1.3px;text-transform:uppercase;font-weight:600;
+}
+.brand h1{
+    margin:12px 0 6px;color:#fff;
+    font-size:clamp(28px,3.6vw,40px);font-weight:700;letter-spacing:-.5px;line-height:1.1;
+}
+.brand h1 span{
+    background:linear-gradient(90deg,var(--cyan-soft),var(--purple) 60%,var(--pink));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.brand p{margin:0;color:var(--soft);font-size:14.5px;line-height:1.5;}
 
-.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;}
+.toolbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
 .btn{
-    background:var(--panel-2);color:var(--text);border:1px solid var(--line-bright);
-    padding:8px 14px;border-radius:8px;cursor:pointer;font-size:13px;
-    transition:border-color .15s,background .15s,box-shadow .15s;
+    background:rgba(16,28,49,.7);color:var(--text);border:1px solid var(--line-bright);
+    padding:9px 14px;border-radius:9px;cursor:pointer;font-size:13px;font-weight:500;
+    display:inline-flex;align-items:center;gap:6px;
+    transition:all .15s;
 }
-.btn:hover{border-color:var(--cyan);box-shadow:0 0 12px rgba(56,189,248,.25);}
-.btn.primary{background:linear-gradient(180deg,#0b3a55,#0a263a);border-color:var(--cyan);color:var(--cyan-soft);}
+.btn:hover{border-color:var(--cyan);background:rgba(56,189,248,.1);box-shadow:0 0 14px rgba(56,189,248,.2);}
+.btn.primary{
+    background:linear-gradient(180deg,rgba(56,189,248,.22),rgba(56,189,248,.08));
+    border-color:rgba(56,189,248,.55);color:var(--cyan-soft);font-weight:600;
+}
 .btn.ghost{background:transparent;}
+.btn svg{width:14px;height:14px;}
 
-.main{padding:20px 24px 60px;display:grid;gap:18px;}
+/* =========================== MAIN =========================== */
+.main{padding:22px 28px 60px;display:grid;gap:18px;max-width:1500px;margin:0 auto;}
 
-/* DROP ZONE */
+/* =========================== DROP =========================== */
 .drop-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
 @media (max-width:900px){.drop-grid{grid-template-columns:1fr;}}
 .drop{
     border:1.5px dashed var(--line-bright);
     border-radius:14px;
     background:linear-gradient(180deg,rgba(11,20,36,.85),rgba(11,20,36,.55));
-    padding:22px;text-align:center;cursor:pointer;
+    padding:20px 22px;text-align:left;cursor:pointer;
     transition:border-color .15s,background .15s,transform .12s;
-    position:relative;overflow:hidden;
+    position:relative;overflow:hidden;display:flex;gap:14px;align-items:center;
 }
 .drop:hover{border-color:var(--cyan);}
 .drop.dragover{border-color:var(--cyan);background:rgba(56,189,248,.08);transform:scale(1.005);}
-.drop h3{margin:0 0 6px;color:var(--cyan-soft);font-size:15px;letter-spacing:.5px;text-transform:uppercase;}
-.drop p{margin:0;color:var(--muted);font-size:13px;line-height:1.5;}
+.drop-icon{
+    width:48px;height:48px;border-radius:12px;flex-shrink:0;
+    background:linear-gradient(135deg,rgba(56,189,248,.25),rgba(167,139,250,.2));
+    display:flex;align-items:center;justify-content:center;
+    border:1px solid rgba(56,189,248,.3);
+}
+.drop-icon svg{width:24px;height:24px;color:var(--cyan-soft);}
+.drop h3{margin:0 0 3px;color:#fff;font-size:14px;letter-spacing:.4px;text-transform:uppercase;}
+.drop p{margin:0;color:var(--muted);font-size:12.5px;line-height:1.45;}
 .drop .badge{
-    display:inline-block;margin-top:10px;padding:4px 10px;border-radius:999px;
-    background:rgba(52,211,153,.12);border:1px solid rgba(52,211,153,.4);color:var(--green);font-size:12px;
+    display:inline-block;margin-top:6px;padding:3px 10px;border-radius:999px;
+    background:rgba(52,211,153,.12);border:1px solid rgba(52,211,153,.4);color:var(--green);font-size:11.5px;font-weight:500;
 }
 .drop .badge.empty{background:rgba(159,177,200,.08);border-color:rgba(159,177,200,.25);color:var(--muted);}
 .drop input[type=file]{display:none;}
 
-/* PANELS */
+/* =========================== EMPTY =========================== */
+.empty-state{
+    background:linear-gradient(180deg,var(--panel),var(--panel-2));
+    border:1px solid var(--line);border-radius:16px;
+    padding:42px 28px;text-align:center;
+}
+.empty-state .es-icon{
+    width:64px;height:64px;border-radius:18px;margin:0 auto 14px;
+    background:linear-gradient(135deg,rgba(56,189,248,.2),rgba(167,139,250,.18));
+    display:flex;align-items:center;justify-content:center;
+    border:1px solid rgba(56,189,248,.35);
+    animation:pulse-soft 3s ease-in-out infinite;
+}
+@keyframes pulse-soft{
+    0%,100%{box-shadow:0 0 0 0 rgba(56,189,248,.4);}
+    50%{box-shadow:0 0 0 18px rgba(56,189,248,0);}
+}
+.empty-state .es-icon svg{width:32px;height:32px;color:var(--cyan-soft);}
+.empty-state h3{margin:0 0 8px;color:#fff;font-size:22px;}
+.empty-state p{margin:0 auto 20px;color:var(--muted);font-size:14px;max-width:480px;line-height:1.5;}
+.es-cta{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;}
+
+/* =========================== BRIEFING =========================== */
+.briefing{
+    background:
+        linear-gradient(135deg,rgba(167,139,250,.18) 0%,rgba(56,189,248,.12) 50%,rgba(52,211,153,.1) 100%),
+        linear-gradient(180deg,var(--panel),var(--panel-2));
+    border:1px solid var(--line-bright);border-radius:16px;
+    padding:22px 26px;position:relative;overflow:hidden;
+    animation:fade-up .5s ease-out;
+}
+.briefing:before{
+    content:"";position:absolute;left:0;top:0;bottom:0;width:4px;
+    background:linear-gradient(180deg,var(--purple),var(--cyan-soft));
+}
+@keyframes fade-up{
+    from{opacity:0;transform:translateY(8px);}
+    to{opacity:1;transform:translateY(0);}
+}
+.brief-tag{
+    display:inline-block;padding:3px 10px;border-radius:999px;font-size:10px;letter-spacing:1.2px;text-transform:uppercase;font-weight:700;
+    background:rgba(167,139,250,.2);color:var(--purple);border:1px solid rgba(167,139,250,.45);
+}
+.brief-headline{
+    margin:10px 0 8px;font-size:clamp(18px,2vw,24px);font-weight:600;line-height:1.35;color:#fff;
+}
+.brief-body{color:var(--soft);font-size:14px;line-height:1.6;}
+.brief-body b{color:#fff;font-weight:600;}
+.brief-body .hot{color:var(--green);font-weight:600;}
+.brief-body .cold{color:var(--red);font-weight:600;}
+
+/* =========================== KPIs =========================== */
+.kpi-grid{display:grid;grid-template-columns:1.1fr repeat(4,1fr);gap:14px;}
+@media (max-width:1100px){.kpi-grid{grid-template-columns:1fr 1fr;}}
+@media (max-width:600px){.kpi-grid{grid-template-columns:1fr;}}
+.kpi{
+    background:linear-gradient(180deg,var(--panel-2),var(--panel-3));
+    border:1px solid var(--line);border-radius:12px;padding:16px 16px 18px;
+    position:relative;overflow:hidden;
+    animation:fade-up .55s ease-out backwards;
+}
+.kpi:nth-child(1){animation-delay:.05s;}
+.kpi:nth-child(2){animation-delay:.1s;}
+.kpi:nth-child(3){animation-delay:.15s;}
+.kpi:nth-child(4){animation-delay:.2s;}
+.kpi:nth-child(5){animation-delay:.25s;}
+.kpi-row{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;}
+.kpi-title{color:var(--muted);font-size:10.5px;letter-spacing:1.4px;text-transform:uppercase;font-weight:600;}
+.kpi-icon{
+    width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;
+    background:rgba(56,189,248,.12);border:1px solid rgba(56,189,248,.3);
+}
+.kpi-icon svg{width:14px;height:14px;color:var(--cyan-soft);}
+.kpi.warn .kpi-icon{background:rgba(251,146,60,.13);border-color:rgba(251,146,60,.35);}
+.kpi.warn .kpi-icon svg{color:var(--orange);}
+.kpi.crit .kpi-icon{background:rgba(251,113,133,.13);border-color:rgba(251,113,133,.35);}
+.kpi.crit .kpi-icon svg{color:var(--red);}
+.kpi.good .kpi-icon{background:rgba(52,211,153,.13);border-color:rgba(52,211,153,.35);}
+.kpi.good .kpi-icon svg{color:var(--green);}
+.kpi-value{font-size:28px;margin-top:8px;font-weight:700;letter-spacing:-.5px;line-height:1;font-variant-numeric:tabular-nums;}
+.kpi-sub{color:var(--muted);font-size:12px;margin-top:5px;}
+
+/* Health gauge */
+.kpi-health{display:flex;align-items:center;gap:18px;padding:14px 18px 14px 14px;}
+.gauge{position:relative;width:96px;height:96px;flex-shrink:0;}
+.gauge svg{transform:rotate(-90deg);width:100%;height:100%;}
+.gauge .ring-bg{fill:none;stroke:rgba(159,177,200,.13);stroke-width:9;}
+.gauge .ring-fg{fill:none;stroke-width:9;stroke-linecap:round;transition:stroke-dashoffset 1.2s cubic-bezier(.5,.1,.3,1.1),stroke 1s;}
+.gauge .ring-val{
+    position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    font-size:24px;font-weight:700;color:#fff;letter-spacing:-.5px;
+}
+.gauge .ring-val small{font-size:10px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-top:1px;font-weight:600;}
+.kpi-health-meta{flex:1;min-width:0;}
+.kpi-health-meta .kpi-title{margin-bottom:4px;}
+.kpi-health-meta .health-label{color:#fff;font-size:15px;font-weight:600;}
+.kpi-health-meta .health-sub{color:var(--muted);font-size:12px;margin-top:3px;line-height:1.4;}
+
+/* =========================== PANELS =========================== */
 .panel{
     background:linear-gradient(180deg,var(--panel),var(--panel-2));
     border:1px solid var(--line);border-radius:14px;padding:18px 20px;
+    animation:fade-up .55s ease-out backwards;animation-delay:.3s;
 }
 .panel-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:14px;gap:12px;flex-wrap:wrap;}
-.panel h2{margin:0;color:var(--cyan-soft);font-size:16px;letter-spacing:.6px;text-transform:uppercase;}
-.panel-note{color:var(--muted);font-size:12px;}
-
-/* KPIs */
-.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
-@media (max-width:1000px){.kpi-grid{grid-template-columns:repeat(2,1fr);}}
-.kpi{
-    background:linear-gradient(180deg,var(--panel-2),var(--panel-3));
-    border:1px solid var(--line);border-radius:12px;padding:16px;position:relative;overflow:hidden;
-}
-.kpi:before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--cyan);}
-.kpi.warn:before{background:var(--orange);}
-.kpi.crit:before{background:var(--red);}
-.kpi.good:before{background:var(--green);}
-.kpi-title{color:var(--muted);font-size:11px;letter-spacing:1px;text-transform:uppercase;}
-.kpi-value{font-size:26px;margin-top:6px;font-weight:600;}
-.kpi-sub{color:var(--muted);font-size:12px;margin-top:4px;}
-
-/* SECTIONS */
-.two-col{display:grid;grid-template-columns:1.4fr 1fr;gap:18px;}
+.panel h2{margin:0;color:#fff;font-size:15px;letter-spacing:.5px;text-transform:uppercase;display:flex;align-items:center;gap:8px;}
+.panel h2 svg{width:14px;height:14px;color:var(--cyan-soft);}
+.panel-note{color:var(--muted);font-size:12px;font-style:italic;}
+.two-col{display:grid;grid-template-columns:1.45fr 1fr;gap:18px;}
 @media (max-width:1100px){.two-col{grid-template-columns:1fr;}}
 
-/* TABLES */
-.deal-list{display:flex;flex-direction:column;gap:8px;max-height:520px;overflow-y:auto;padding-right:4px;}
+/* =========================== DEAL CARDS =========================== */
+.deal-list{display:flex;flex-direction:column;gap:8px;max-height:540px;overflow-y:auto;padding-right:4px;}
 .deal-list::-webkit-scrollbar{width:8px;}
 .deal-list::-webkit-scrollbar-thumb{background:var(--line-bright);border-radius:4px;}
 .deal{
-    display:grid;grid-template-columns:1fr auto;gap:6px 12px;
-    padding:12px 14px;border:1px solid var(--line);border-radius:10px;
-    background:rgba(16,28,49,.5);
+    padding:12px 14px;border:1px solid var(--line);border-radius:11px;
+    background:rgba(16,28,49,.5);position:relative;
+    transition:border-color .15s,transform .12s;
 }
+.deal:hover{border-color:var(--line-bright);}
+.deal.crit{border-left:3px solid var(--red);}
+.deal.high{border-left:3px solid var(--orange);}
+.deal.med{border-left:3px solid var(--yellow);}
+.deal.low{border-left:3px solid var(--green);}
 .deal-top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;}
-.deal-name{font-weight:600;color:var(--text);font-size:14px;}
+.deal-name{font-weight:600;color:#fff;font-size:14px;}
 .deal-account{color:var(--muted);font-size:12px;margin-left:6px;}
-.deal-meta{color:var(--muted);font-size:12px;}
+.deal-meta{color:var(--muted);font-size:12px;margin-top:5px;display:flex;flex-wrap:wrap;gap:4px 10px;}
+.deal-meta b{color:var(--soft);font-weight:500;}
 .risk-chip{
-    padding:3px 9px;border-radius:999px;font-size:11px;letter-spacing:.5px;text-transform:uppercase;font-weight:600;
+    padding:3px 10px;border-radius:999px;font-size:11px;letter-spacing:.6px;text-transform:uppercase;font-weight:700;
+    display:inline-flex;align-items:center;gap:5px;flex-shrink:0;
 }
-.risk-chip.crit{background:rgba(251,113,133,.15);color:var(--red);border:1px solid rgba(251,113,133,.4);}
+.risk-chip svg{width:11px;height:11px;}
+.risk-chip.crit{background:rgba(251,113,133,.15);color:var(--red);border:1px solid rgba(251,113,133,.4);animation:pulse-crit 2.5s ease-in-out infinite;}
+@keyframes pulse-crit{
+    0%,100%{box-shadow:0 0 0 0 rgba(251,113,133,.5);}
+    50%{box-shadow:0 0 0 6px rgba(251,113,133,0);}
+}
 .risk-chip.high{background:rgba(251,146,60,.15);color:var(--orange);border:1px solid rgba(251,146,60,.4);}
 .risk-chip.med{background:rgba(250,204,21,.15);color:var(--yellow);border:1px solid rgba(250,204,21,.4);}
 .risk-chip.low{background:rgba(52,211,153,.15);color:var(--green);border:1px solid rgba(52,211,153,.4);}
-.deal-reasons{font-size:12px;color:var(--soft);grid-column:1/-1;}
-.deal-reasons span{
-    display:inline-block;margin:4px 6px 0 0;padding:2px 8px;border-radius:6px;
-    background:rgba(56,189,248,.08);border:1px solid rgba(56,189,248,.2);color:var(--cyan-soft);font-size:11px;
+.deal-reasons{font-size:12px;color:var(--soft);margin-top:8px;display:flex;flex-wrap:wrap;gap:5px;}
+.reason{
+    display:inline-flex;align-items:center;gap:5px;padding:3px 9px;border-radius:6px;
+    background:rgba(56,189,248,.08);border:1px solid rgba(56,189,248,.2);color:var(--cyan-soft);font-size:11.5px;
 }
+.reason svg{width:10px;height:10px;flex-shrink:0;}
 .deal-next{
-    grid-column:1/-1;margin-top:6px;padding:8px 10px;border-radius:8px;
-    background:rgba(167,139,250,.08);border-left:3px solid var(--purple);font-size:12.5px;color:var(--text);
+    margin-top:9px;padding:9px 11px;border-radius:9px;
+    background:linear-gradient(90deg,rgba(167,139,250,.13),rgba(167,139,250,.04));
+    border-left:3px solid var(--purple);font-size:12.5px;color:#fff;line-height:1.45;
+    display:flex;gap:8px;align-items:flex-start;
 }
-.deal-next strong{color:var(--purple);font-size:11px;letter-spacing:.6px;text-transform:uppercase;margin-right:6px;}
+.deal-next svg{width:14px;height:14px;color:var(--purple);flex-shrink:0;margin-top:1px;}
+.deal-next strong{color:var(--purple);font-size:10.5px;letter-spacing:.7px;text-transform:uppercase;display:block;margin-bottom:1px;font-weight:700;}
 
-/* STAGE FUNNEL */
-.funnel{display:flex;flex-direction:column;gap:8px;}
-.fbar{position:relative;background:rgba(16,28,49,.6);border:1px solid var(--line);border-radius:8px;overflow:hidden;height:34px;}
-.fbar-fill{position:absolute;left:0;top:0;bottom:0;background:linear-gradient(90deg,rgba(56,189,248,.3),rgba(56,189,248,.65));}
-.fbar-label{position:relative;padding:8px 12px;display:flex;justify-content:space-between;align-items:center;font-size:13px;}
-.fbar-label .sname{color:var(--text);font-weight:500;}
-.fbar-label .sval{color:var(--cyan-soft);font-variant-numeric:tabular-nums;}
+/* =========================== FUNNEL =========================== */
+.funnel{display:flex;flex-direction:column;gap:6px;padding:6px 0;}
+.fbar{position:relative;height:38px;display:flex;align-items:center;}
+.fbar-shape{
+    height:100%;border-radius:8px;
+    background:linear-gradient(90deg,rgba(56,189,248,.55),rgba(167,139,250,.35));
+    border:1px solid rgba(56,189,248,.45);
+    box-shadow:inset 0 0 24px rgba(56,189,248,.12);
+    transition:width 1s cubic-bezier(.4,.0,.2,1);
+    display:flex;align-items:center;padding:0 12px;justify-content:space-between;gap:10px;min-width:0;
+}
+.fbar-shape .sname{color:#fff;font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.fbar-shape .sval{color:var(--cyan-soft);font-size:12px;font-variant-numeric:tabular-nums;flex-shrink:0;}
+.fbar-meta{position:absolute;right:6px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:11px;pointer-events:none;}
+.fbar.has-drop:after{
+    content:"";position:absolute;left:0;right:0;bottom:-6px;height:4px;
+}
 
-/* NEXT MOVE LIST */
-.nm-list{display:flex;flex-direction:column;gap:8px;max-height:520px;overflow-y:auto;padding-right:4px;}
+/* =========================== NEXT MOVES =========================== */
+.nm-list{display:flex;flex-direction:column;gap:8px;max-height:540px;overflow-y:auto;padding-right:4px;}
 .nm{
-    padding:11px 13px;border:1px solid var(--line);border-radius:10px;background:rgba(16,28,49,.5);
+    padding:11px 13px;border:1px solid var(--line);border-radius:10px;
+    background:linear-gradient(90deg,rgba(167,139,250,.06),rgba(16,28,49,.5));
     border-left:3px solid var(--purple);
+    transition:border-color .12s,transform .12s;
 }
-.nm-head{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-bottom:4px;}
+.nm:hover{border-color:rgba(167,139,250,.5);}
+.nm-head{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-bottom:5px;gap:8px;}
 .nm-deal{color:var(--cyan-soft);font-weight:600;font-size:13px;}
-.nm-action{color:var(--text);font-size:13.5px;line-height:1.4;}
+.nm-meta{color:var(--muted);font-size:11.5px;}
+.nm-action{color:#fff;font-size:13.5px;line-height:1.45;}
 
-/* EMPTY STATE */
-.empty-state{
-    text-align:center;padding:50px 20px;color:var(--muted);
+/* =========================== OWNERS =========================== */
+.owner-list{display:flex;flex-direction:column;gap:10px;}
+.owner-row{
+    display:grid;grid-template-columns:130px 1fr auto;gap:12px;align-items:center;
+    padding:8px 10px;border-radius:9px;background:rgba(16,28,49,.4);
+    border:1px solid var(--line);
 }
-.empty-state h3{color:var(--cyan-soft);margin:0 0 8px;}
+.owner-name{color:#fff;font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.owner-bar{position:relative;height:24px;background:rgba(159,177,200,.06);border-radius:6px;overflow:hidden;}
+.owner-bar-fill{position:absolute;left:0;top:0;bottom:0;background:linear-gradient(90deg,rgba(56,189,248,.55),rgba(56,189,248,.85));transition:width .9s cubic-bezier(.4,0,.2,1);}
+.owner-bar-risk{position:absolute;left:0;top:0;bottom:0;background:linear-gradient(90deg,rgba(251,113,133,.55),rgba(251,113,133,.8));transition:width .9s cubic-bezier(.4,0,.2,1);}
+.owner-val{color:var(--cyan-soft);font-size:12.5px;font-variant-numeric:tabular-nums;font-weight:600;text-align:right;}
+.owner-val small{color:var(--muted);font-size:10.5px;font-weight:500;display:block;}
 
 .hidden{display:none !important;}
+.tiny-note{color:var(--muted);font-size:12.5px;padding:18px;text-align:center;}
 
-footer{padding:20px 24px;color:var(--muted);font-size:11px;text-align:center;border-top:1px solid var(--line);margin-top:30px;}
-footer a{color:var(--cyan-soft);text-decoration:none;}
+footer{padding:22px 28px;color:var(--muted);font-size:11.5px;text-align:center;border-top:1px solid var(--line);margin-top:30px;}
+footer strong{color:var(--soft);}
 </style>
 </head>
 <body>
 
-<div class="topbar">
-    <div class="brand">
-        <h1>Sales Pipeline Risk Dashboard</h1>
-        <p>Drop your pipeline + meetings &middot; see what's at risk, what's stuck, and what to do next</p>
+<!-- ICON SPRITE -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+        <symbol id="i-fire" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2c.5 4-3 5-3 9a3 3 0 0 0 6 0c0-1-1-2-1-3 3 1 5 4 5 7a7 7 0 1 1-14 0c0-5 4-7 4-13 1 0 3 0 3 0z"/></symbol>
+        <symbol id="i-clock" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M12 22a10 10 0 1 1 0-20 10 10 0 0 1 0 20zm0-16v6l4 2"/></symbol>
+        <symbol id="i-alert" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M12 2L1 22h22zM12 9v5m0 3.5v.5"/></symbol>
+        <symbol id="i-target" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M12 22a10 10 0 1 1 0-20 10 10 0 0 1 0 20zm0-4a6 6 0 1 1 0-12 6 6 0 0 1 0 12zm0-3a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/></symbol>
+        <symbol id="i-dollar" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M12 2v20M16 6H10a3 3 0 0 0 0 6h4a3 3 0 0 1 0 6H8"/></symbol>
+        <symbol id="i-trend" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M3 17l6-6 4 4 8-8M17 7h4v4"/></symbol>
+        <symbol id="i-pause" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M9 6v12M15 6v12"/></symbol>
+        <symbol id="i-heart" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></symbol>
+        <symbol id="i-upload" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/></symbol>
+        <symbol id="i-download" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></symbol>
+        <symbol id="i-spark" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2l2.4 6.4L21 11l-6.6 2.6L12 20l-2.4-6.4L3 11l6.6-2.6z"/></symbol>
+        <symbol id="i-people" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></symbol>
+        <symbol id="i-flag" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M4 22V4s2-2 6-2 6 4 10 4 4-2 4-2v12s-2 2-4 2-6-4-10-4-6 2-6 2"/></symbol>
+    </defs>
+</svg>
+
+<header class="hero">
+    <div class="hero-inner">
+        <div class="brand">
+            <span class="brand-tag">Billiot Advisory · Revenue Ops</span>
+            <h1>Find the fires. <span>Fix the flow.</span></h1>
+            <p>Drop your pipeline + meetings. See what's at risk, what's stuck, and what to do next — instantly.</p>
+        </div>
+        <div class="toolbar">
+            <button class="btn primary" id="btn-sample"><svg><use href="#i-spark"/></svg>Load sample</button>
+            <button class="btn ghost" id="btn-aviation"><svg><use href="#i-download"/></svg>Aviation CSV</button>
+            <button class="btn ghost" id="btn-saas"><svg><use href="#i-download"/></svg>SaaS CSV</button>
+            <button class="btn ghost" id="btn-template"><svg><use href="#i-download"/></svg>Templates</button>
+            <button class="btn ghost" id="btn-clear">Clear</button>
+        </div>
     </div>
-    <div class="toolbar">
-        <button class="btn ghost" id="btn-sample">Load sample data</button>
-        <button class="btn ghost" id="btn-clear">Clear</button>
-        <button class="btn primary" id="btn-template">Download CSV templates</button>
-    </div>
-</div>
+</header>
 
 <div class="main">
 
-    <!-- DROP ZONES -->
     <div class="drop-grid" id="drop-section">
         <label class="drop" id="drop-pipeline">
-            <h3>Pipeline CSV</h3>
-            <p>Drop or click to upload. Expected columns:<br>
-            <code>deal_name, account, stage, amount, probability, close_date, owner, last_activity_date, contact_role</code></p>
-            <span class="badge empty" id="badge-pipeline">No file loaded</span>
+            <div class="drop-icon"><svg><use href="#i-upload"/></svg></div>
+            <div>
+                <h3>Pipeline CSV</h3>
+                <p>Drag here or click. Columns: <code>deal_name, account, stage, amount, probability, close_date, owner, last_activity_date, contact_role</code></p>
+                <span class="badge empty" id="badge-pipeline">No file loaded</span>
+            </div>
             <input type="file" accept=".csv,text/csv" id="file-pipeline">
         </label>
         <label class="drop" id="drop-meetings">
-            <h3>Meetings CSV <span style="font-size:11px;color:var(--muted);font-weight:normal;">(optional)</span></h3>
-            <p>Drop or click to upload. Expected columns:<br>
-            <code>date, deal_name (or account), attendees, outcome, notes</code></p>
-            <span class="badge empty" id="badge-meetings">No file loaded</span>
+            <div class="drop-icon"><svg><use href="#i-people"/></svg></div>
+            <div>
+                <h3>Meetings CSV <span style="font-size:11px;color:var(--muted);font-weight:normal;text-transform:none;letter-spacing:0;">(optional)</span></h3>
+                <p>Drag here or click. Columns: <code>date, deal_name (or account), attendees, outcome, notes</code></p>
+                <span class="badge empty" id="badge-meetings">No file loaded</span>
+            </div>
             <input type="file" accept=".csv,text/csv" id="file-meetings">
         </label>
     </div>
 
-    <!-- EMPTY STATE -->
-    <div class="panel empty-state" id="empty">
-        <h3>Waiting for your pipeline</h3>
-        <p>Drop a CSV above &mdash; or click <strong>Load sample data</strong> to see how it works.</p>
+    <div class="empty-state" id="empty">
+        <div class="es-icon"><svg><use href="#i-spark"/></svg></div>
+        <h3>Your pipeline, scored in seconds</h3>
+        <p>Drop your CSVs above — or try one of the training pipelines below. Nothing leaves your browser.</p>
+        <div class="es-cta">
+            <button class="btn primary" id="es-sample"><svg><use href="#i-spark"/></svg>Quick demo</button>
+            <button class="btn" id="es-aviation"><svg><use href="#i-flag"/></svg>Aviation training set</button>
+            <button class="btn" id="es-saas"><svg><use href="#i-trend"/></svg>SaaS training set</button>
+        </div>
     </div>
 
-    <!-- DASHBOARD -->
     <div id="dashboard" class="hidden">
 
-        <!-- KPIs -->
-        <div class="kpi-grid" style="margin-bottom:18px;">
-            <div class="kpi"><div class="kpi-title">Open Pipeline</div><div class="kpi-value" id="kpi-pipeline">—</div><div class="kpi-sub" id="kpi-pipeline-sub"></div></div>
-            <div class="kpi" id="kpi-weighted-wrap"><div class="kpi-title">Weighted Forecast</div><div class="kpi-value" id="kpi-weighted">—</div><div class="kpi-sub" id="kpi-weighted-sub"></div></div>
-            <div class="kpi crit" id="kpi-risk-wrap"><div class="kpi-title">At-Risk Value</div><div class="kpi-value" id="kpi-risk">—</div><div class="kpi-sub" id="kpi-risk-sub"></div></div>
-            <div class="kpi warn" id="kpi-stuck-wrap"><div class="kpi-title">Stuck Deals</div><div class="kpi-value" id="kpi-stuck">—</div><div class="kpi-sub" id="kpi-stuck-sub"></div></div>
+        <div class="briefing" id="briefing"></div>
+
+        <div class="kpi-grid">
+            <div class="kpi kpi-health">
+                <div class="gauge" id="gauge">
+                    <svg viewBox="0 0 100 100">
+                        <circle class="ring-bg" cx="50" cy="50" r="42"/>
+                        <circle class="ring-fg" id="ring-fg" cx="50" cy="50" r="42" stroke="var(--green)" stroke-dasharray="264" stroke-dashoffset="264"/>
+                    </svg>
+                    <div class="ring-val"><span id="health-num">0</span><small>Health</small></div>
+                </div>
+                <div class="kpi-health-meta">
+                    <div class="kpi-title">Pipeline Pulse</div>
+                    <div class="health-label" id="health-label">—</div>
+                    <div class="health-sub" id="health-sub"></div>
+                </div>
+            </div>
+            <div class="kpi">
+                <div class="kpi-row"><div class="kpi-title">Open Pipeline</div><div class="kpi-icon"><svg><use href="#i-dollar"/></svg></div></div>
+                <div class="kpi-value" id="kpi-pipeline">—</div>
+                <div class="kpi-sub" id="kpi-pipeline-sub"></div>
+            </div>
+            <div class="kpi good">
+                <div class="kpi-row"><div class="kpi-title">Weighted Forecast</div><div class="kpi-icon"><svg><use href="#i-trend"/></svg></div></div>
+                <div class="kpi-value" id="kpi-weighted">—</div>
+                <div class="kpi-sub" id="kpi-weighted-sub"></div>
+            </div>
+            <div class="kpi crit">
+                <div class="kpi-row"><div class="kpi-title">At-Risk Value</div><div class="kpi-icon"><svg><use href="#i-fire"/></svg></div></div>
+                <div class="kpi-value" id="kpi-risk">—</div>
+                <div class="kpi-sub" id="kpi-risk-sub"></div>
+            </div>
+            <div class="kpi warn">
+                <div class="kpi-row"><div class="kpi-title">Stuck Deals</div><div class="kpi-icon"><svg><use href="#i-pause"/></svg></div></div>
+                <div class="kpi-value" id="kpi-stuck">—</div>
+                <div class="kpi-sub" id="kpi-stuck-sub"></div>
+            </div>
         </div>
 
-        <!-- TOP ROW: At Risk + Next Moves -->
-        <div class="two-col" style="margin-bottom:18px;">
+        <div class="two-col">
             <div class="panel">
                 <div class="panel-head">
-                    <h2>At-Risk Deals</h2>
-                    <span class="panel-note">Sorted by risk score &times; deal value</span>
+                    <h2><svg><use href="#i-fire"/></svg>At-Risk Deals</h2>
+                    <span class="panel-note">These need you this week</span>
                 </div>
                 <div class="deal-list" id="risk-list"></div>
             </div>
             <div class="panel">
                 <div class="panel-head">
-                    <h2>Your Next Moves</h2>
-                    <span class="panel-note">Prioritized by impact</span>
+                    <h2><svg><use href="#i-target"/></svg>Your Next Moves</h2>
+                    <span class="panel-note">Do these. Don't think. Do.</span>
                 </div>
                 <div class="nm-list" id="nm-list"></div>
             </div>
         </div>
 
-        <!-- BOTTOM ROW: Stuck + Funnel -->
         <div class="two-col">
             <div class="panel">
                 <div class="panel-head">
-                    <h2>Stuck Deals</h2>
-                    <span class="panel-note">No movement vs. typical stage velocity</span>
+                    <h2><svg><use href="#i-pause"/></svg>Stuck Deals</h2>
+                    <span class="panel-note">Sitting too long — what's blocking?</span>
                 </div>
                 <div class="deal-list" id="stuck-list"></div>
             </div>
             <div class="panel">
                 <div class="panel-head">
-                    <h2>Pipeline by Stage</h2>
-                    <span class="panel-note">Count &amp; total value</span>
+                    <h2><svg><use href="#i-trend"/></svg>Pipeline by Stage</h2>
+                    <span class="panel-note">Where the money sits</span>
                 </div>
                 <div class="funnel" id="funnel"></div>
             </div>
         </div>
+
+        <div class="panel">
+            <div class="panel-head">
+                <h2><svg><use href="#i-people"/></svg>Pipeline by Owner</h2>
+                <span class="panel-note">Blue = open value · pink = at-risk</span>
+            </div>
+            <div class="owner-list" id="owner-list"></div>
+        </div>
+
     </div>
 
 </div>
 
 <footer>
-    Billiot Advisory &middot; All processing happens locally in your browser. No data leaves this page.
+    <strong>Billiot Advisory</strong> · All scoring runs locally in your browser · No data leaves this page
 </footer>
 
 <script>
 // ============================================================
-// CSV PARSER (handles quoted fields, escaped quotes, CRLF)
+// CSV PARSER
 // ============================================================
 function parseCSV(text){
     const rows=[];let row=[];let cell="";let i=0;let inQ=false;
@@ -294,17 +526,12 @@ function parseCSV(text){
         .map(r=>{const o={};header.forEach((h,idx)=>o[h]=(r[idx]||"").trim());return o;});
 }
 
-// Flexible header resolver
-function pick(obj,names){
-    for(const n of names){if(obj[n]!==undefined&&obj[n]!=="")return obj[n];}
-    return"";
-}
+function pick(obj,names){for(const n of names){if(obj[n]!==undefined&&obj[n]!=="")return obj[n];}return"";}
 function num(v){const n=parseFloat(String(v).replace(/[$,\s]/g,""));return isNaN(n)?0:n;}
 function dt(v){if(!v)return null;const d=new Date(v);return isNaN(d.getTime())?null:d;}
 function daysBetween(a,b){return Math.round((b-a)/(1000*60*60*24));}
 const TODAY=new Date(); TODAY.setHours(0,0,0,0);
 
-// Typical days-in-stage thresholds for "stuck"
 const STAGE_VELOCITY={
     "prospecting":21,"discovery":21,"qualification":14,
     "demo":14,"proposal":21,"negotiation":21,"contract":14,
@@ -323,9 +550,6 @@ function stageOrder(stage){
     return 99;
 }
 
-// ============================================================
-// NORMALIZATION
-// ============================================================
 function normalizeDeals(rows){
     return rows.map((r,idx)=>{
         const deal_name=pick(r,["deal_name","deal","name","opportunity","opportunity_name"])||("Deal "+(idx+1));
@@ -356,8 +580,6 @@ function normalizeMeetings(rows){
         id:idx,
     }));
 }
-
-// Attach meetings to deals by matching on deal_name or account
 function attachMeetings(deals,meetings){
     const byDeal={};const byAcct={};
     for(const m of meetings){
@@ -381,68 +603,50 @@ function attachMeetings(deals,meetings){
 }
 
 // ============================================================
-// RISK + NEXT MOVE ENGINE
+// RISK ENGINE
 // ============================================================
 function scoreDeal(d){
     const reasons=[];let score=0;
     const stageL=(d.stage||"").toLowerCase();
     const isOpen=!stageL.includes("closed");
     if(!isOpen)return{score:0,reasons:[],band:"low",isOpen:false,stuck:false,daysInStage:null};
-
-    // 1. Close date slippage
     if(d.close_date){
         const dd=daysBetween(TODAY,d.close_date);
-        if(dd<0){score+=35;reasons.push(`Close date ${Math.abs(dd)}d past due`);}
-        else if(dd<=14&&d.probability<60){score+=20;reasons.push(`Closes in ${dd}d, only ${Math.round(d.probability)}% confidence`);}
-        else if(dd<=7){score+=10;reasons.push(`Closes in ${dd}d`);}
-    }else{
-        score+=8;reasons.push("No close date set");
-    }
-
-    // 2. Activity recency
+        if(dd<0){score+=35;reasons.push({i:"i-alert",t:`Close date ${Math.abs(dd)}d past due`});}
+        else if(dd<=14&&d.probability<60){score+=20;reasons.push({i:"i-clock",t:`Closes in ${dd}d, only ${Math.round(d.probability)}% confidence`});}
+        else if(dd<=7){score+=10;reasons.push({i:"i-clock",t:`Closes in ${dd}d`});}
+    }else{score+=8;reasons.push({i:"i-alert",t:"No close date set"});}
     const lastTouch=d.last_meeting||d.last_activity;
     if(lastTouch){
         const since=daysBetween(lastTouch,TODAY);
-        if(since>=30){score+=25;reasons.push(`No activity in ${since}d`);}
-        else if(since>=14){score+=15;reasons.push(`Quiet for ${since}d`);}
-    }else{
-        score+=20;reasons.push("No recent activity logged");
-    }
-
-    // 3. Stuck in stage
+        if(since>=30){score+=25;reasons.push({i:"i-clock",t:`No activity in ${since}d`});}
+        else if(since>=14){score+=15;reasons.push({i:"i-clock",t:`Quiet for ${since}d`});}
+    }else{score+=20;reasons.push({i:"i-clock",t:"No recent activity logged"});}
     let daysInStage=null;
     if(d.stage_entered){
         daysInStage=daysBetween(d.stage_entered,TODAY);
         const vel=stageVelocity(d.stage);
-        if(vel&&daysInStage>vel*1.5){score+=20;reasons.push(`In "${d.stage}" ${daysInStage}d (typical ${vel})`);}
-        else if(vel&&daysInStage>vel){score+=10;reasons.push(`In "${d.stage}" ${daysInStage}d`);}
+        if(vel&&daysInStage>vel*1.5){score+=20;reasons.push({i:"i-pause",t:`In "${d.stage}" ${daysInStage}d (typical ${vel})`});}
+        else if(vel&&daysInStage>vel){score+=10;reasons.push({i:"i-pause",t:`In "${d.stage}" ${daysInStage}d`});}
     }
     const stuck=daysInStage!==null&&daysInStage>stageVelocity(d.stage)*1.5;
-
-    // 4. Single thread / no decision maker
     const role=(d.contact_role||"").toLowerCase();
     const dmHints=["ceo","cfo","coo","cto","vp","head","director","chief","founder","owner","president"];
     if(role&&!dmHints.some(h=>role.includes(h))){
-        score+=12;reasons.push("No decision-maker contact");
+        score+=12;reasons.push({i:"i-people",t:"No decision-maker contact"});
     }else if(!role&&!d.contact_name){
-        score+=10;reasons.push("No primary contact mapped");
+        score+=10;reasons.push({i:"i-people",t:"No primary contact mapped"});
     }
-
-    // 5. Low probability for late stage
     if((stageL.includes("negotiation")||stageL.includes("contract")||stageL.includes("proposal"))&&d.probability<50){
-        score+=12;reasons.push(`Late stage but ${Math.round(d.probability)}% confidence`);
+        score+=12;reasons.push({i:"i-alert",t:`Late stage but ${Math.round(d.probability)}% confidence`});
     }
-
-    // 6. Few meetings
     if(d.meeting_count_30d===0&&(stageL.includes("demo")||stageL.includes("proposal")||stageL.includes("negotiation"))){
-        score+=10;reasons.push("Zero meetings in last 30d");
+        score+=10;reasons.push({i:"i-people",t:"Zero meetings in last 30d"});
     }
-
     let band="low";
     if(score>=55)band="crit";
     else if(score>=35)band="high";
     else if(score>=18)band="med";
-
     return{score,reasons,band,isOpen:true,stuck,daysInStage};
 }
 
@@ -451,18 +655,14 @@ function nextMove(d,risk){
     const stageL=(d.stage||"").toLowerCase();
     const lastTouch=d.last_meeting||d.last_activity;
     const since=lastTouch?daysBetween(lastTouch,TODAY):999;
-
-    if(d.close_date&&daysBetween(TODAY,d.close_date)<0){
+    if(d.close_date&&daysBetween(TODAY,d.close_date)<0)
         return"Reset the close date with the buyer this week — confirm timeline or move to lost.";
-    }
-    if(since>=30){
+    if(since>=30)
         return"Break the silence: send a multi-thread email to the champion + one exec sponsor today.";
-    }
     const role=(d.contact_role||"").toLowerCase();
     const dmHints=["ceo","cfo","coo","cto","vp","head","director","chief","founder","owner","president"];
-    if((!role||!dmHints.some(h=>role.includes(h)))&&!stageL.includes("prospecting")){
+    if((!role||!dmHints.some(h=>role.includes(h)))&&!stageL.includes("prospecting"))
         return"Get to the economic buyer — ask your champion for an intro to the budget holder.";
-    }
     if(risk.stuck){
         if(stageL.includes("proposal"))return"Pricing or scope is the blocker — schedule a 20-min objection-handling call.";
         if(stageL.includes("negotiation"))return"Send a redline with a dated expiration to force a decision.";
@@ -470,9 +670,8 @@ function nextMove(d,risk){
         if(stageL.includes("discovery")||stageL.includes("qualification"))return"Re-qualify pain + budget — if neither is fresh, deprioritize.";
         return"Book a 15-min status call this week to identify what's actually blocking movement.";
     }
-    if(d.close_date&&daysBetween(TODAY,d.close_date)<=14&&d.probability<60){
+    if(d.close_date&&daysBetween(TODAY,d.close_date)<=14&&d.probability<60)
         return"Close-plan check: walk the buyer through procurement steps & dates this week.";
-    }
     if(d.meeting_count_30d===0&&(stageL.includes("demo")||stageL.includes("proposal")))
         return"Put a meeting on the calendar — no meeting in 30d at this stage is a leading lost signal.";
     if(since>=14)return"Touch base with new value — case study or relevant insight, not a check-in.";
@@ -480,7 +679,7 @@ function nextMove(d,risk){
 }
 
 // ============================================================
-// FORMAT HELPERS
+// HELPERS
 // ============================================================
 function fmtMoney(n){
     if(!n)return"$0";
@@ -489,11 +688,61 @@ function fmtMoney(n){
     return"$"+Math.round(n).toLocaleString();
 }
 function escapeHTML(s){return String(s||"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]));}
+function animateCount(el,target,format){
+    const start=parseFloat(el.dataset.cur||"0");
+    const end=target;
+    const dur=700;
+    const t0=performance.now();
+    function step(t){
+        const k=Math.min(1,(t-t0)/dur);
+        const eased=1-Math.pow(1-k,3);
+        const val=start+(end-start)*eased;
+        el.textContent=format(val);
+        el.dataset.cur=val;
+        if(k<1)requestAnimationFrame(step);
+        else el.dataset.cur=end;
+    }
+    requestAnimationFrame(step);
+}
 
 // ============================================================
 // RENDER
 // ============================================================
 let DEALS=[];let MEETINGS=[];
+
+function healthScore(open){
+    if(!open.length)return 100;
+    const avgRisk=open.reduce((s,d)=>s+d.risk.score,0)/open.length;
+    const stuckRatio=open.filter(d=>d.risk.stuck).length/open.length;
+    const score=100-avgRisk-(stuckRatio*15);
+    return Math.max(0,Math.min(100,Math.round(score)));
+}
+
+function buildBriefing(enriched){
+    const open=enriched.filter(d=>d.risk.isOpen);
+    if(!open.length)return`<div class="brief-tag">Today</div><div class="brief-headline">No open deals to score.</div>`;
+    const todayStr=TODAY.toISOString().slice(0,10);
+    const crits=enriched.filter(d=>d.risk.band==="crit");
+    const highs=enriched.filter(d=>d.risk.band==="high");
+    const pastDue=enriched.filter(d=>d.close_date&&daysBetween(TODAY,d.close_date)<0&&d.risk.isOpen);
+    const star=enriched.slice().filter(d=>d.risk.isOpen&&d.probability>=70).sort((a,b)=>b.amount*b.probability-a.amount*a.probability)[0];
+    const fires=crits.length+highs.length;
+
+    let h="";
+    if(fires===0)h=`Quiet pipeline today. Nothing's burning — focus on momentum.`;
+    else if(fires===1)h=`<span class="cold">1 fire today.</span> Don't let it become two.`;
+    else h=`<span class="cold">${fires} fires today.</span> Triage them before email.`;
+
+    let body="";
+    if(pastDue.length){
+        body+=`<b>${pastDue.length}</b> deal${pastDue.length>1?"s":""} slipped past close (${pastDue.slice(0,2).map(d=>escapeHTML(d.deal_name)).join(", ")}${pastDue.length>2?"…":""}) — reset dates this week. `;
+    }
+    if(star)body+=`Strongest mover: <span class="hot">${escapeHTML(star.deal_name)}</span> (${fmtMoney(star.amount)}, ${Math.round(star.probability)}% confidence${star.close_date?`, closes in ${daysBetween(TODAY,star.close_date)}d`:""}). `;
+    const stuckCount=open.filter(d=>d.risk.stuck).length;
+    if(stuckCount)body+=`<b>${stuckCount}</b> deal${stuckCount>1?"s":""} stuck in stage. `;
+    if(!body)body="Everything's moving. Keep the cadence and watch for slippage.";
+    return`<div class="brief-tag">Briefing · ${todayStr}</div><div class="brief-headline">${h}</div><div class="brief-body">${body}</div>`;
+}
 
 function render(){
     if(!DEALS.length){
@@ -503,9 +752,11 @@ function render(){
     }
     document.getElementById("empty").classList.add("hidden");
     document.getElementById("dashboard").classList.remove("hidden");
-
     const enriched=DEALS.map(d=>{const risk=scoreDeal(d);return{...d,risk,next:nextMove(d,risk)};});
     const open=enriched.filter(d=>d.risk.isOpen);
+
+    // Briefing
+    document.getElementById("briefing").innerHTML=buildBriefing(enriched);
 
     // KPIs
     const totalPipe=open.reduce((s,d)=>s+d.amount,0);
@@ -513,42 +764,59 @@ function render(){
     const atRisk=open.filter(d=>d.risk.band==="crit"||d.risk.band==="high");
     const atRiskVal=atRisk.reduce((s,d)=>s+d.amount,0);
     const stuckList=open.filter(d=>d.risk.stuck);
-
-    document.getElementById("kpi-pipeline").textContent=fmtMoney(totalPipe);
-    document.getElementById("kpi-pipeline-sub").textContent=`${open.length} open deal${open.length===1?"":"s"}`;
-    document.getElementById("kpi-weighted").textContent=fmtMoney(weighted);
-    document.getElementById("kpi-weighted-sub").textContent="Probability-weighted";
-    document.getElementById("kpi-risk").textContent=fmtMoney(atRiskVal);
-    document.getElementById("kpi-risk-sub").textContent=`${atRisk.length} deal${atRisk.length===1?"":"s"} flagged`;
-    document.getElementById("kpi-stuck").textContent=stuckList.length;
     const stuckVal=stuckList.reduce((s,d)=>s+d.amount,0);
+
+    animateCount(document.getElementById("kpi-pipeline"),totalPipe,v=>fmtMoney(v));
+    document.getElementById("kpi-pipeline-sub").textContent=`${open.length} open deal${open.length===1?"":"s"}`;
+    animateCount(document.getElementById("kpi-weighted"),weighted,v=>fmtMoney(v));
+    document.getElementById("kpi-weighted-sub").textContent="Probability-weighted";
+    animateCount(document.getElementById("kpi-risk"),atRiskVal,v=>fmtMoney(v));
+    document.getElementById("kpi-risk-sub").textContent=`${atRisk.length} deal${atRisk.length===1?"":"s"} flagged`;
+    animateCount(document.getElementById("kpi-stuck"),stuckList.length,v=>Math.round(v).toString());
     document.getElementById("kpi-stuck-sub").textContent=`${fmtMoney(stuckVal)} not moving`;
 
-    // RISK LIST
+    // Health gauge
+    const hs=healthScore(open);
+    const ringFg=document.getElementById("ring-fg");
+    const circumference=2*Math.PI*42;
+    ringFg.setAttribute("stroke-dasharray",circumference);
+    const offset=circumference*(1-hs/100);
+    ringFg.style.strokeDashoffset=offset;
+    let ringColor=getComputedStyle(document.documentElement).getPropertyValue("--green");
+    let label="Strong";let sub="Pipeline is moving well.";
+    if(hs<40){ringColor=getComputedStyle(document.documentElement).getPropertyValue("--red");label="At risk";sub="Multiple deals need attention now.";}
+    else if(hs<65){ringColor=getComputedStyle(document.documentElement).getPropertyValue("--orange");label="Watch";sub="Cracks forming — act this week.";}
+    else if(hs<80){ringColor=getComputedStyle(document.documentElement).getPropertyValue("--yellow");label="OK";sub="Solid, but tighten the laggards.";}
+    ringFg.style.stroke=ringColor;
+    animateCount(document.getElementById("health-num"),hs,v=>Math.round(v).toString());
+    document.getElementById("health-label").textContent=label;
+    document.getElementById("health-sub").textContent=sub;
+
+    // At-Risk
     const riskSorted=atRisk.slice().sort((a,b)=>(b.risk.score*Math.log10(b.amount+10))-(a.risk.score*Math.log10(a.amount+10)));
     document.getElementById("risk-list").innerHTML=riskSorted.length
-        ? riskSorted.map(d=>dealCard(d)).join("")
-        : `<div style="color:var(--muted);font-size:13px;padding:14px;">No deals flagged at risk. Nice.</div>`;
+        ? riskSorted.map(dealCard).join("")
+        : `<div class="tiny-note">No deals flagged at risk. Nice.</div>`;
 
-    // STUCK LIST
+    // Stuck
     const stuckSorted=stuckList.slice().sort((a,b)=>(b.risk.daysInStage||0)-(a.risk.daysInStage||0));
     document.getElementById("stuck-list").innerHTML=stuckSorted.length
         ? stuckSorted.map(d=>dealCard(d,{compact:true})).join("")
-        : `<div style="color:var(--muted);font-size:13px;padding:14px;">Nothing stuck right now.</div>`;
+        : `<div class="tiny-note">Nothing stuck right now.</div>`;
 
-    // NEXT MOVES (one per deal, priority order = risk × value)
+    // Next moves
     const nm=enriched.filter(d=>d.next)
         .sort((a,b)=>(b.risk.score*Math.log10(b.amount+10))-(a.risk.score*Math.log10(a.amount+10)))
-        .slice(0,12);
+        .slice(0,14);
     document.getElementById("nm-list").innerHTML=nm.length
         ? nm.map(d=>`
             <div class="nm">
-                <div class="nm-head"><span class="nm-deal">${escapeHTML(d.deal_name)}</span><span>${escapeHTML(d.account||"")} &middot; ${fmtMoney(d.amount)}</span></div>
+                <div class="nm-head"><span class="nm-deal">${escapeHTML(d.deal_name)}</span><span class="nm-meta">${escapeHTML(d.account||"")} · ${fmtMoney(d.amount)}</span></div>
                 <div class="nm-action">${escapeHTML(d.next)}</div>
             </div>`).join("")
-        : `<div style="color:var(--muted);font-size:13px;padding:14px;">No actions queued.</div>`;
+        : `<div class="tiny-note">No actions queued.</div>`;
 
-    // FUNNEL
+    // Funnel (true funnel shape — descending widths)
     const stages={};
     for(const d of open){
         const s=d.stage||"Unspecified";
@@ -557,35 +825,62 @@ function render(){
     }
     const stageList=Object.entries(stages).sort((a,b)=>a[1].order-b[1].order);
     const maxVal=Math.max(1,...stageList.map(([_,v])=>v.value));
-    document.getElementById("funnel").innerHTML=stageList.map(([s,v])=>`
+    document.getElementById("funnel").innerHTML=stageList.map(([s,v],idx)=>{
+        const pct=Math.max(20,(v.value/maxVal)*100);
+        return`
         <div class="fbar">
-            <div class="fbar-fill" style="width:${(v.value/maxVal)*100}%"></div>
-            <div class="fbar-label">
-                <span class="sname">${escapeHTML(s)} <span style="color:var(--muted);font-size:11px;">(${v.count})</span></span>
+            <div class="fbar-shape" style="width:${pct}%;margin-left:${(100-pct)/2}%;">
+                <span class="sname">${escapeHTML(s)} <span style="color:var(--muted);font-weight:500;font-size:11.5px;">(${v.count})</span></span>
                 <span class="sval">${fmtMoney(v.value)}</span>
             </div>
-        </div>
-    `).join("");
+        </div>`;
+    }).join("")||`<div class="tiny-note">No open deals.</div>`;
+
+    // Owner pipeline
+    const owners={};
+    for(const d of open){
+        const o=d.owner||"Unassigned";
+        if(!owners[o])owners[o]={total:0,risk:0,count:0};
+        owners[o].total+=d.amount;owners[o].count++;
+        if(d.risk.band==="crit"||d.risk.band==="high")owners[o].risk+=d.amount;
+    }
+    const ownerList=Object.entries(owners).sort((a,b)=>b[1].total-a[1].total);
+    const maxOwn=Math.max(1,...ownerList.map(([_,v])=>v.total));
+    document.getElementById("owner-list").innerHTML=ownerList.length
+        ? ownerList.map(([name,v])=>`
+            <div class="owner-row">
+                <div class="owner-name">${escapeHTML(name)}</div>
+                <div class="owner-bar">
+                    <div class="owner-bar-fill" style="width:${(v.total/maxOwn)*100}%"></div>
+                    <div class="owner-bar-risk" style="width:${(v.risk/maxOwn)*100}%"></div>
+                </div>
+                <div class="owner-val">${fmtMoney(v.total)}<small>${v.count} deal${v.count===1?"":"s"} · ${fmtMoney(v.risk)} at risk</small></div>
+            </div>`).join("")
+        : `<div class="tiny-note">No owner data.</div>`;
 }
 
 function dealCard(d,opts={}){
     const r=d.risk;
+    const bandLabel=r.band==="crit"?"Critical":r.band==="high"?"High":r.band==="med"?"Watch":"Low";
+    const bandIcon=r.band==="crit"?"i-fire":r.band==="high"?"i-alert":r.band==="med"?"i-clock":"i-heart";
     return `
-    <div class="deal">
+    <div class="deal ${r.band}">
         <div class="deal-top">
             <div>
                 <span class="deal-name">${escapeHTML(d.deal_name)}</span>
                 <span class="deal-account">${escapeHTML(d.account||"")}</span>
             </div>
-            <span class="risk-chip ${r.band}">${r.band==="crit"?"Critical":r.band==="high"?"High":r.band==="med"?"Watch":"Low"} &middot; ${r.score}</span>
+            <span class="risk-chip ${r.band}"><svg><use href="#${bandIcon}"/></svg>${bandLabel} · ${r.score}</span>
         </div>
         <div class="deal-meta">
-            ${escapeHTML(d.stage||"—")} &middot; ${fmtMoney(d.amount)} &middot; ${Math.round(d.probability||0)}%
-            ${d.close_date?` &middot; close ${d.close_date.toISOString().slice(0,10)}`:""}
-            ${d.owner?` &middot; ${escapeHTML(d.owner)}`:""}
+            <b>${escapeHTML(d.stage||"—")}</b>
+            <span>${fmtMoney(d.amount)}</span>
+            <span>${Math.round(d.probability||0)}%</span>
+            ${d.close_date?`<span>close ${d.close_date.toISOString().slice(0,10)}</span>`:""}
+            ${d.owner?`<span>· ${escapeHTML(d.owner)}</span>`:""}
         </div>
-        ${r.reasons.length?`<div class="deal-reasons">${r.reasons.map(x=>`<span>${escapeHTML(x)}</span>`).join("")}</div>`:""}
-        ${!opts.compact&&d.next?`<div class="deal-next"><strong>Next move</strong>${escapeHTML(d.next)}</div>`:""}
+        ${r.reasons.length?`<div class="deal-reasons">${r.reasons.map(x=>`<span class="reason"><svg><use href="#${x.i}"/></svg>${escapeHTML(x.t)}</span>`).join("")}</div>`:""}
+        ${!opts.compact&&d.next?`<div class="deal-next"><svg><use href="#i-target"/></svg><div><strong>Next move</strong>${escapeHTML(d.next)}</div></div>`:""}
     </div>`;
 }
 
@@ -622,38 +917,55 @@ wireDrop("drop-pipeline","file-pipeline","pipeline");
 wireDrop("drop-meetings","file-meetings","meetings");
 
 // ============================================================
-// SAMPLE DATA + TEMPLATES
+// SAMPLE LOADERS
 // ============================================================
 function isoOffset(days){const d=new Date(TODAY);d.setDate(d.getDate()+days);return d.toISOString().slice(0,10);}
-function loadSample(){
-    const samplePipeline=[
+function loadInlineSample(){
+    const p=[
         {deal_name:"Skyline Cargo Renewal",account:"Skyline Air",stage:"Negotiation",amount:240000,probability:65,close_date:isoOffset(10),owner:"K. Billiot",last_activity_date:isoOffset(-22),stage_entered:isoOffset(-48),contact_role:"VP Ops"},
         {deal_name:"Coastal Charter MRO Deal",account:"Coastal Charter",stage:"Proposal",amount:115000,probability:40,close_date:isoOffset(-6),owner:"K. Billiot",last_activity_date:isoOffset(-9),stage_entered:isoOffset(-35),contact_role:"Director Maintenance"},
         {deal_name:"Pacific Regional Fleet Pilot",account:"Pacific Regional",stage:"Demo",amount:80000,probability:30,close_date:isoOffset(40),owner:"M. Tran",last_activity_date:isoOffset(-3),stage_entered:isoOffset(-11),contact_role:"Ops Analyst"},
-        {deal_name:"Atlas Freight Expansion",account:"Atlas Freight",stage:"Discovery",amount:50000,probability:20,close_date:isoOffset(70),owner:"M. Tran",last_activity_date:isoOffset(-14),stage_entered:isoOffset(-30),contact_role:"Manager"},
         {deal_name:"Northern Skies Annual",account:"Northern Skies",stage:"Contract",amount:320000,probability:80,close_date:isoOffset(6),owner:"K. Billiot",last_activity_date:isoOffset(-2),stage_entered:isoOffset(-9),contact_role:"CFO"},
         {deal_name:"Harbor Helicopters Trial",account:"Harbor Helicopters",stage:"Qualification",amount:28000,probability:25,close_date:isoOffset(55),owner:"R. Lopez",last_activity_date:isoOffset(-41),stage_entered:isoOffset(-44),contact_role:"Scheduler"},
         {deal_name:"Summit Air Crew Module",account:"Summit Air",stage:"Negotiation",amount:175000,probability:55,close_date:isoOffset(20),owner:"K. Billiot",last_activity_date:isoOffset(-6),stage_entered:isoOffset(-40),contact_role:"VP People"},
         {deal_name:"Delta Logistics Insight",account:"Delta Logistics",stage:"Proposal",amount:95000,probability:50,close_date:isoOffset(14),owner:"R. Lopez",last_activity_date:isoOffset(-1),stage_entered:isoOffset(-12),contact_role:"COO"},
-        {deal_name:"Mesa Aviation Pilot",account:"Mesa Aviation",stage:"Demo",amount:42000,probability:35,close_date:isoOffset(28),owner:"M. Tran",last_activity_date:isoOffset(-19),stage_entered:isoOffset(-27),contact_role:"Analyst"},
         {deal_name:"Greenline Air Renewal",account:"Greenline Air",stage:"Closed Won",amount:210000,probability:100,close_date:isoOffset(-7),owner:"K. Billiot",last_activity_date:isoOffset(-7),stage_entered:isoOffset(-7),contact_role:"CFO"},
     ];
-    const sampleMeetings=[
+    const m=[
         {date:isoOffset(-2),deal_name:"Northern Skies Annual",attendees:"CFO, Procurement",outcome:"Positive",notes:"Redline back in 2 days"},
         {date:isoOffset(-1),deal_name:"Delta Logistics Insight",attendees:"COO",outcome:"Positive",notes:"Wants demo for team"},
-        {date:isoOffset(-3),deal_name:"Pacific Regional Fleet Pilot",attendees:"Ops Analyst",outcome:"Neutral",notes:"Sent comparison doc"},
         {date:isoOffset(-6),deal_name:"Summit Air Crew Module",attendees:"VP People",outcome:"Positive",notes:"Pricing pushback"},
-        {date:isoOffset(-9),deal_name:"Coastal Charter MRO Deal",attendees:"Director Maintenance",outcome:"Neutral",notes:"Awaiting board sign-off"},
     ];
-    DEALS=normalizeDeals(samplePipeline);
-    MEETINGS=normalizeMeetings(sampleMeetings);
+    DEALS=normalizeDeals(p);MEETINGS=normalizeMeetings(m);
     DEALS=attachMeetings(DEALS,MEETINGS);
     setBadge("badge-pipeline","sample_pipeline.csv",true);
     setBadge("badge-meetings","sample_meetings.csv",true);
     render();
 }
-document.getElementById("btn-sample").addEventListener("click",loadSample);
 
+async function loadFromUrl(pipelineUrl,meetingsUrl,labelPipeline,labelMeetings){
+    try{
+        const [p,m]=await Promise.all([
+            fetch(pipelineUrl).then(r=>{if(!r.ok)throw new Error(r.status);return r.text();}),
+            fetch(meetingsUrl).then(r=>{if(!r.ok)throw new Error(r.status);return r.text();}),
+        ]);
+        DEALS=normalizeDeals(parseCSV(p));
+        MEETINGS=normalizeMeetings(parseCSV(m));
+        DEALS=attachMeetings(DEALS,MEETINGS);
+        setBadge("badge-pipeline",labelPipeline,true);
+        setBadge("badge-meetings",labelMeetings,true);
+        render();
+    }catch(e){
+        alert("Couldn't load training set ("+e.message+"). If opening this file via file:// , use the sample button or upload the CSVs manually from /samples/.");
+    }
+}
+
+document.getElementById("btn-sample").addEventListener("click",loadInlineSample);
+document.getElementById("es-sample").addEventListener("click",loadInlineSample);
+document.getElementById("btn-aviation").addEventListener("click",()=>loadFromUrl("samples/aviation-pipeline.csv","samples/aviation-meetings.csv","aviation-pipeline.csv","aviation-meetings.csv"));
+document.getElementById("es-aviation").addEventListener("click",()=>loadFromUrl("samples/aviation-pipeline.csv","samples/aviation-meetings.csv","aviation-pipeline.csv","aviation-meetings.csv"));
+document.getElementById("btn-saas").addEventListener("click",()=>loadFromUrl("samples/saas-pipeline.csv","samples/saas-meetings.csv","saas-pipeline.csv","saas-meetings.csv"));
+document.getElementById("es-saas").addEventListener("click",()=>loadFromUrl("samples/saas-pipeline.csv","samples/saas-meetings.csv","saas-pipeline.csv","saas-meetings.csv"));
 document.getElementById("btn-clear").addEventListener("click",()=>{
     DEALS=[];MEETINGS=[];
     setBadge("badge-pipeline","",false);setBadge("badge-meetings","",false);
