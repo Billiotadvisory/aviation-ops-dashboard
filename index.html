@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Billiot Advisory | Executive Aviation Dashboard</title>
+
+<style>
+
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#07111f;
+    color:white;
+}
+
+.header{
+    padding:24px;
+    background:linear-gradient(90deg,#08111f,#172554);
+    border-bottom:1px solid #334155;
+}
+
+.header h1{
+    margin:0;
+    font-size:38px;
+    color:#7dd3fc;
+}
+
+.header p{
+    margin-top:8px;
+    color:#cbd5e1;
+}
+
+.banner{
+    background:#111827;
+    color:#facc15;
+    padding:14px 24px;
+    font-weight:bold;
+    border-bottom:1px solid #334155;
+}
+
+.ticker{
+    background:#020617;
+    color:#7dd3fc;
+    padding:10px 24px;
+    border-bottom:1px solid #1e293b;
+    font-size:14px;
+    letter-spacing:1px;
+}
+
+.dashboard{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+    gap:18px;
+    padding:24px;
+}
+
+.card{
+    background:#111827;
+    border:1px solid #1e3a8a;
+    border-radius:16px;
+    padding:22px;
+    cursor:pointer;
+    transition:all .25s ease;
+}
+
+.card:hover{
+    transform:translateY(-4px);
+    box-shadow:0 0 25px rgba(56,189,248,.35);
+}
+
+.card h2{
+    margin-top:0;
+    color:#dbeafe;
+}
+
+.metric{
+    font-size:52px;
+    font-weight:bold;
+    margin-top:12px;
+}
+
+.good{
+    color:#86efac;
+}
+
+.warning{
+    color:#fde047;
+}
+
+.bad{
+    color:#fb7185;
+}
+
+.section{
+    padding:24px;
+}
+
+.panel{
+    background:#0f172a;
+    border:1px solid #334155;
+    border-radius:16px;
+    padding:24px;
+    margin-bottom:22px;
+}
+
+button{
+    padding:12px 18px;
+    background:#2563eb;
+    color:white;
+    border:none;
+    border-radius:10px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#1d4ed8;
+}
+
+select{
+    padding:12px;
+    border-radius:10px;
+    margin-right:10px;
+}
+
+.heatmap{
+    display:grid;
+    grid-template-columns:120px repeat(4,1fr);
+    gap:8px;
+    margin-top:20px;
+}
+
+.cell{
+    padding:14px;
+    text-align:center;
+    border-radius:8px;
+    cursor:pointer;
+    transition:.2s;
+    background:#1e293b;
+}
+
+.cell:hover{
+    transform:scale(1.03);
+}
+
+.low{
+    background:#166534;
+}
+
+.med{
+    background:#854d0e;
+}
+
+.high{
+    background:#991b1b;
+}
+
+.aircraft{
+    display:grid;
+    grid-template-columns:1.2fr 1fr;
+    gap:24px;
+}
+
+.aircraft-box{
+    background:linear-gradient(145deg,#020617,#1e293b);
+    border-radius:16px;
+    padding:20px;
+    text-align:center;
+}
+
+.aircraft-box img{
+    width:100%;
+    border-radius:14px;
+}
+
+.bar{
+    background:#1e293b;
+    border-radius:8px;
+    height:14px;
+    overflow:hidden;
+    margin-bottom:18px;
+}
+
+.fill-green{
+    width:82%;
+    height:14px;
+    background:#22c55e;
+}
+
+.fill-blue{
+    width:91%;
+    height:14px;
+    background:#38bdf8;
+}
+
+.footer{
+    text-align:center;
+    padding:24px;
+    color:#94a3b8;
+}
+
+.risk-bars{
+    display:flex;
+    gap:24px;
+    align-items:end;
+    height:220px;
+    margin-top:20px;
+}
+
+.risk-bar{
+    width:100px;
+    border-radius:10px 10px 0 0;
+}
+
+@media(max-width:900px){
+
+    .aircraft{
+        grid-template-columns:1fr;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="header">
+    <h1>Billiot Advisory</h1>
+    <p>Executive Aviation Operations Intelligence Dashboard</p>
+</div>
+
+<div class="banner">
+    SYSTEM STATUS: NORMAL OPS | WESTERN REGION WEATHER WATCH ACTIVE
+</div>
+
+<div class="ticker">
+    DEN RECOVERY ACTIVE • ORD GDP DELAYS • ASPEN VFR RISK • CREW LEGALITY WATCH • RV-14 READY
+</div>
+
+<div class="dashboard">
+
+<div class="card"
+onclick="updateDetail('OTP trend improving across western region operation.')">
+
+    <h2>On-Time Performance</h2>
+
+    <div class="metric good">91.4%</div>
+
+    <p>Network D0/A14 performance</p>
+
+</div>
+
+<div class="card"
+onclick="updateDetail('Delay propagation risk increasing around DEN and ORD.')">
+
+    <h2>Delay Propagation</h2>
+
+    <div class="metric warning">Moderate</div>
+
+    <p>Hub pressure increasing</p>
+
+</div>
+
+<div class="card"
+onclick="updateDetail('Crew legality pressure elevated across evening bank structure.')">
+
+    <h2>Crew Legality Risk</h2>
+
+    <div class="metric bad">12</div>
+
+    <p>Flights near legality threshold</p>
+
+</div>
+
+<div class="card"
+onclick="updateDetail('RV-14 owner/operator module active.')">
+
+    <h2>Van’s RV-14</h2>
+
+    <div class="metric good">Ready</div>
+
+    <p>Private aviation operational visibility</p>
+
+</div>
+
+</div>
+
+<div class="section">
+
+<div class="panel">
+
+<h2>Operational Detail</h2>
+
+<p id="detailText">
+Click KPI cards or heatmap cells to view operational interpretation.
+</p>
+
+</div>
+
+<div class="panel">
+
+<h2>OTP Trend Chart</h2>
+
+<canvas id="otpChart"></canvas>
+
+</div>
+
+<div class="panel">
+
+<h2>Operational Risk Distribution</h2>
+
+<div class="risk-bars">
+
+<div>
+<div class="risk-bar" style="height:90px;background:#22c55e;"></div>
+<p>Low</p>
+</div>
+
+<div>
+<div class="risk-bar" style="height:150px;background:#facc15;"></div>
+<p>Moderate</p>
+</div>
+
+<div>
+<div class="risk-bar" style="height:200px;background:#ef4444;"></div>
+<p>High</p>
+</div>
+
+</div>
+
+</div>
+
+<div class="panel">
+
+<h2>Station Selector</h2>
+
+<select id="stationSelect">
+
+<option>DEN</option>
+<option>ORD</option>
+<option>IAH</option>
+<option>EWR</option>
+<option>LAX</option>
+<option>ASE</option>
+
+</select>
+
+<button onclick="stationUpdate()">
+Analyze Station
+</button>
+
+<p id="stationOutput">
+Select station to analyze operational risk.
+</p>
+
+</div>
+
+<div class="panel">
+
+<h2>Delay Heatmap</h2>
+
+<div class="heatmap">
+
+<div class="cell">Station</div>
+<div class="cell">0600</div>
+<div class="cell">1200</div>
+<div class="cell">1800</div>
+<div class="cell">2200</div>
+
+<div class="cell">DEN</div>
+
+<div class="cell low"
+onclick="heatmapDetail('DEN morning operation stable.')">
+Low
+</div>
+
+<div class="cell med"
+onclick="heatmapDetail('DEN midday congestion building.')">
+Med
+</div>
+
+<div class="cell high"
+onclick="heatmapDetail('DEN evening delay propagation elevated.')">
+High
+</div>
+
+<div class="cell med"
+onclick="heatmapDetail('DEN late-night recovery active.')">
+Med
+</div>
+
+<div class="cell">ORD</div>
+
+<div class="cell med"
+onclick="heatmapDetail('ORD gate utilization elevated.')">
+Med
+</div>
+
+<div class="cell med"
+onclick="heatmapDetail('ORD midday flow constrained.')">
+Med
+</div>
+
+<div class="cell high"
+onclick="heatmapDetail('ORD severe evening disruption risk.')">
+High
+</div>
+
+<div class="cell high"
+onclick="heatmapDetail('ORD late-night crew legality pressure.')">
+High
+</div>
+
+</div>
+
+</div>
+
+<div class="panel aircraft">
+
+<div>
+
+<h2>Van’s RV-14 Owner/Operator Module</h2>
+
+<p>
+Aircraft readiness, utilization,
+maintenance posture,
+and flight-risk visibility.
+</p>
+
+<p><strong>Status:</strong> Flight Ready</p>
+
+<p><strong>Next inspection:</strong> 18 flight hours</p>
+
+<p><strong>Utilization:</strong> 6.2 hours this month</p>
+
+<p><strong>Operational note:</strong>
+VFR corridor risk elevated near Aspen.
+</p>
+
+<h3>Fuel Status</h3>
+
+<div class="bar">
+<div class="fill-green"></div>
+</div>
+
+<h3>Maintenance Readiness</h3>
+
+<div class="bar">
+<div class="fill-blue"></div>
+</div>
+
+</div>
+
+<div class="aircraft-box">
+
+<h2>RV-14</h2>
+
+<img src="rv14.png" alt="RV14 Aircraft">
+
+<p>
+Experimental aircraft operational visibility
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="footer">
+Built for operational resilience,
+executive aviation visibility,
+and decision-support intelligence.
+</div>
+
+<script>
+
+function updateDetail(text){
+
+    document.getElementById("detailText").innerText = text;
+
+}
+
+function heatmapDetail(text){
+
+    document.getElementById("detailText").innerText = text;
+
+}
+
+function stationUpdate(){
+
+    const station =
+    document.getElementById("stationSelect").value;
+
+    const messages = {
+
+        DEN:"DEN: Elevated recovery pressure due to weather and evening bank volume.",
+
+        ORD:"ORD: High delay propagation risk. Monitor crew legality and gate flow.",
+
+        IAH:"IAH: Stable operation with moderate weather exposure.",
+
+        EWR:"EWR: Airspace congestion risk elevated.",
+
+        LAX:"LAX: Ground flow stable. Turn performance slightly below target.",
+
+        ASE:"ASE: Mountain weather sensitivity elevated for VFR operations."
+    };
+
+    document.getElementById("stationOutput").innerText =
+    messages[station];
+}
+
+const canvas = document.getElementById("otpChart");
+const ctx = canvas.getContext("2d");
+
+canvas.width = 760;
+canvas.height = 260;
+
+const otpData = [88,90,87,91,92,89,91];
+
+const labels = [
+"Mon",
+"Tue",
+"Wed",
+"Thu",
+"Fri",
+"Sat",
+"Sun"
+];
+
+function drawChart(){
+
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+
+    ctx.beginPath();
+
+    ctx.strokeStyle = "#38bdf8";
+
+    ctx.shadowColor = "#38bdf8";
+
+    ctx.shadowBlur = 12;
+
+    ctx.lineWidth = 4;
+
+    otpData.forEach((value,index)=>{
+
+        const x = 70 + index * 95;
+
+        const y = 210 - value * 2;
+
+        if(index === 0){
+
+            ctx.moveTo(x,y);
+
+        } else {
+
+            ctx.lineTo(x,y);
+
+        }
+
+    });
+
+    ctx.stroke();
+
+    otpData.forEach((value,index)=>{
+
+        const x = 70 + index * 95;
+
+        const y = 210 - value * 2;
+
+        ctx.beginPath();
+
+        ctx.arc(x,y,8,0,Math.PI * 2);
+
+        ctx.fillStyle = "#7dd3fc";
+
+        ctx.fill();
+
+        ctx.fillStyle = "#ffffff";
+
+        ctx.font = "16px Arial";
+
+        ctx.fillText(value + "%",x - 18,y - 18);
+
+        ctx.fillText(labels[index],x - 15,240);
+
+    });
+
+}
+
+drawChart();
+
+</script>
+
+</body>
+</html>
