@@ -1,0 +1,19 @@
+deal_name,account,stage,amount,probability,close_date,owner,last_activity_date,stage_entered,contact_name,contact_role
+Skyline Cargo Annual Renewal,Skyline Air,Negotiation,240000,65,2026-06-01,K. Billiot,2026-04-30,2026-04-04,Ana Reyes,VP Ops
+Coastal Charter MRO Deal,Coastal Charter,Proposal,115000,40,2026-05-16,M. Tran,2026-05-13,2026-04-17,Tom Healy,Director Maintenance
+Pacific Regional Fleet Pilot,Pacific Regional,Demo,80000,30,2026-07-01,M. Tran,2026-05-19,2026-05-11,Jen Park,Ops Analyst
+Atlas Freight Expansion,Atlas Freight,Discovery,50000,20,2026-07-31,M. Tran,2026-05-08,2026-04-22,Brian Cole,Manager
+Northern Skies Annual,Northern Skies,Contract,320000,80,2026-05-28,K. Billiot,2026-05-20,2026-05-13,Lisa Marquez,CFO
+Harbor Helicopters Trial,Harbor Helicopters,Qualification,28000,25,2026-07-16,R. Lopez,2026-04-11,2026-04-08,Dan Werner,Scheduler
+Summit Air Crew Module,Summit Air,Negotiation,175000,55,2026-06-11,K. Billiot,2026-05-16,2026-04-12,Priya Shah,VP People
+Delta Logistics Insight,Delta Logistics,Proposal,95000,50,2026-06-05,R. Lopez,2026-05-21,2026-05-10,Mark Liu,COO
+Mesa Aviation Pilot,Mesa Aviation,Demo,42000,35,2026-06-19,M. Tran,2026-05-03,2026-04-25,Sara Quinn,Analyst
+Greenline Air Renewal,Greenline Air,Closed Won,210000,100,2026-05-15,K. Billiot,2026-05-15,2026-05-15,Reggie Park,CFO
+Aero Express Network OTP,Aero Express,Proposal,185000,35,2026-05-25,K. Billiot,2026-04-26,2026-03-20,Cyrus Wei,Senior Analyst
+Sapphire Jet Crew Optimization,Sapphire Jet,Discovery,65000,25,2026-08-15,R. Lopez,2026-05-12,2026-05-05,Hannah Lim,VP Crew
+Beacon Cargo Refuel Program,Beacon Cargo,Negotiation,410000,70,2026-06-30,K. Billiot,2026-05-21,2026-04-29,Eric Solis,CFO
+Vanguard Aviation Crew Legality,Vanguard Aviation,Demo,54000,40,2026-07-15,M. Tran,2026-04-15,2026-04-10,Olivia Burns,Director Ops
+Polar Air OCC Pilot,Polar Air,Qualification,32000,20,2026-09-01,R. Lopez,2026-05-17,2026-05-10,Greg Hall,Ops Manager
+Trident Charter Maintenance Suite,Trident Charter,Contract,145000,90,2026-05-30,K. Billiot,2026-05-22,2026-05-18,Maya Cohen,CEO
+Falcon MRO Expansion,Falcon MRO,Proposal,98000,30,2026-05-10,M. Tran,2026-04-20,2026-03-15,Paul Otieno,Plant Manager
+Arc Air New Routes Analytics,Arc Air,Closed Lost,75000,0,2026-05-10,R. Lopez,2026-05-10,2026-05-10,Nina Bell,VP Ops

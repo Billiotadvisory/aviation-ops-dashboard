@@ -1,0 +1,16 @@
+deal_name,account,stage,amount,probability,close_date,owner,last_activity_date,stage_entered,contact_name,contact_role
+Acme Corp Enterprise,Acme Corp,Negotiation,480000,60,2026-06-15,Sarah Chen,2026-04-25,2026-03-12,Joel Park,CTO
+Bright Inc Annual,Bright Inc,Proposal,120000,45,2026-05-29,Mike Reyes,2026-05-19,2026-04-22,Diana Wu,VP Eng
+Helix Labs Trial,Helix Labs,Demo,35000,25,2026-07-10,Sarah Chen,2026-05-15,2026-05-08,Ryan Kim,Engineer
+Cascade Systems Renewal,Cascade Systems,Contract,250000,85,2026-05-30,Mike Reyes,2026-05-21,2026-05-13,Lena Vargas,CFO
+Quantum Co Pilot,Quantum Co,Discovery,90000,20,2026-09-01,Sarah Chen,2026-04-08,2026-04-01,Owen Diaz,Manager
+Polaris Tech Expansion,Polaris Tech,Proposal,155000,30,2026-05-15,Tom Liu,2026-04-20,2026-03-22,Aria Singh,Tech Lead
+Vista Group Enterprise,Vista Group,Negotiation,310000,70,2026-06-22,Sarah Chen,2026-05-20,2026-05-01,Chris Bauer,VP Ops
+Echo Networks SMB,Echo Networks,Qualification,25000,30,2026-08-12,Tom Liu,2026-05-18,2026-05-10,Sam Patel,IT Manager
+Forge Industries Modular,Forge Industries,Demo,75000,35,2026-06-30,Mike Reyes,2026-04-10,2026-04-03,Jess Quinn,Procurement
+Trove Studios Annual,Trove Studios,Closed Won,95000,100,2026-05-19,Sarah Chen,2026-05-19,2026-05-19,Carla Mendes,Founder
+Nimbus Cloud Pilot,Nimbus Cloud,Discovery,60000,25,2026-08-30,Tom Liu,2026-05-21,2026-05-14,Eli Hayes,Director
+Atlas Studios Enterprise,Atlas Studios,Proposal,200000,50,2026-06-12,Sarah Chen,2026-05-22,2026-04-30,Devon Cole,President
+Orbit Data Migration,Orbit Data,Demo,68000,30,2026-07-08,Mike Reyes,2026-04-30,2026-04-25,Pat Nyland,Analyst
+Lumen Health SaaS,Lumen Health,Negotiation,220000,55,2026-06-08,Sarah Chen,2026-05-09,2026-04-02,Maya Foss,VP Product
+Spire Logistics SMB,Spire Logistics,Closed Lost,40000,0,2026-05-12,Tom Liu,2026-05-12,2026-05-12,Wes Trent,Manager
