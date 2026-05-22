@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Billiot Advisory | Executive Aviation Dashboard</title>
+<title>Billiot Advisory | Decision-Support Dashboards</title>
 <style>
 :root{
     --bg:#050b14;
@@ -19,19 +19,12 @@
     --cyan:#38bdf8;
     --cyan-soft:#7dd3fc;
     --green:#34d399;
-    --yellow:#facc15;
-    --orange:#fb923c;
-    --red:#fb7185;
     --purple:#a78bfa;
 }
-
-*{
-    box-sizing:border-box;
-}
-
+*{box-sizing:border-box;}
 body{
     margin:0;
-    font-family:Arial,sans-serif;
+    font-family:Arial,Helvetica,sans-serif;
     color:var(--text);
     background:
         linear-gradient(rgba(56,189,248,.04) 1px,transparent 1px),
@@ -40,1271 +33,145 @@ body{
         radial-gradient(circle at 88% 8%,rgba(167,139,250,.1),transparent 28%),
         var(--bg);
     background-size:48px 48px,48px 48px,100% 100%,100% 100%,100% 100%;
-}
-
-button,
-select{
-    font:inherit;
-}
-
-.app{
     min-height:100vh;
+    display:flex;flex-direction:column;
 }
 
 .topbar{
-    display:grid;
-    grid-template-columns:1.4fr 1fr;
-    gap:20px;
-    padding:20px 24px;
+    padding:22px 28px;
     background:linear-gradient(90deg,#07111f,#0c1b30 54%,#172554);
     border-bottom:1px solid var(--line);
 }
-
-.brand h1{
-    margin:0;
-    color:var(--cyan-soft);
-    font-size:clamp(28px,4vw,42px);
-    letter-spacing:.4px;
+.topbar h1{
+    margin:0;color:var(--cyan-soft);
+    font-size:clamp(22px,2.6vw,30px);letter-spacing:.4px;
 }
+.topbar p{margin:5px 0 0;color:var(--muted);font-size:13px;}
 
-.brand p{
-    margin:7px 0 0;
-    color:var(--muted);
-}
-
-.ops-clock{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:10px;
-}
-
-.clock-tile{
-    background:rgba(5,11,20,.72);
-    border:1px solid var(--line);
-    border-radius:8px;
-    padding:12px;
-}
-
-.label{
-    display:block;
-    color:var(--muted);
-    font-size:11px;
-    letter-spacing:1px;
-    text-transform:uppercase;
-}
-
-.value{
-    display:block;
-    margin-top:5px;
-    color:var(--text);
-    font-size:20px;
-    font-weight:700;
-}
-
-.status-strip{
-    display:flex;
-    align-items:center;
-    gap:18px;
-    padding:12px 24px;
-    background:#08101d;
-    border-bottom:1px solid var(--line);
-    overflow:hidden;
-}
-
-.status-pill{
-    display:flex;
-    align-items:center;
-    gap:8px;
-    white-space:nowrap;
-    color:#dbeafe;
-    font-size:13px;
-    font-weight:700;
-}
-
-.pulse{
-    width:10px;
-    height:10px;
-    border-radius:50%;
-    background:var(--green);
-    box-shadow:0 0 0 0 rgba(52,211,153,.7);
-    animation:pulse 1.8s infinite;
-}
-
-.pulse.warn{
-    background:var(--yellow);
-    box-shadow:0 0 0 0 rgba(250,204,21,.7);
-}
-
-.marquee{
-    min-width:0;
+.main{
     flex:1;
-    color:var(--cyan-soft);
-    font-size:13px;
-    letter-spacing:.8px;
-    overflow:hidden;
-    white-space:nowrap;
+    display:flex;flex-direction:column;justify-content:center;
+    padding:40px 24px;max-width:1200px;width:100%;margin:0 auto;
 }
 
-.marquee span{
-    display:inline-block;
-    animation:marquee 32s linear infinite;
+.intro{text-align:center;margin-bottom:36px;}
+.intro h2{
+    margin:0;color:var(--text);
+    font-size:clamp(24px,3.4vw,38px);font-weight:600;letter-spacing:.3px;
 }
+.intro p{margin:10px auto 0;color:var(--muted);font-size:15px;max-width:640px;line-height:1.5;}
 
-.layout{
-    display:grid;
-    grid-template-columns:minmax(0,1.65fr) minmax(320px,.8fr);
-    gap:20px;
-    padding:20px 24px 28px;
+.tiles{
+    display:grid;grid-template-columns:1fr 1fr;gap:22px;
 }
+@media (max-width:820px){.tiles{grid-template-columns:1fr;}}
 
-.panel{
-    background:linear-gradient(180deg,rgba(16,28,49,.94),rgba(8,17,31,.96));
-    border:1px solid var(--line);
-    border-radius:8px;
-    padding:18px;
-    box-shadow:0 18px 44px rgba(0,0,0,.2);
+.tile{
+    display:block;text-decoration:none;color:inherit;
+    background:linear-gradient(180deg,var(--panel),var(--panel-2));
+    border:1px solid var(--line);border-radius:16px;
+    padding:28px 26px;
+    position:relative;overflow:hidden;
+    transition:border-color .18s,transform .18s,box-shadow .18s;
 }
-
-.panel + .panel{
+.tile:before{
+    content:"";position:absolute;left:0;top:0;right:0;height:3px;
+    background:linear-gradient(90deg,var(--cyan),transparent);
+    opacity:.7;
+}
+.tile.purple:before{background:linear-gradient(90deg,var(--purple),transparent);}
+.tile:hover{
+    border-color:var(--cyan);transform:translateY(-2px);
+    box-shadow:0 14px 40px -20px rgba(56,189,248,.5);
+}
+.tile.purple:hover{
+    border-color:var(--purple);
+    box-shadow:0 14px 40px -20px rgba(167,139,250,.5);
+}
+.tile-tag{
+    display:inline-block;padding:3px 10px;border-radius:999px;
+    font-size:11px;letter-spacing:.6px;text-transform:uppercase;
+    background:rgba(56,189,248,.12);color:var(--cyan-soft);
+    border:1px solid rgba(56,189,248,.3);
+}
+.tile.purple .tile-tag{
+    background:rgba(167,139,250,.12);color:var(--purple);
+    border-color:rgba(167,139,250,.3);
+}
+.tile h3{
+    margin:14px 0 6px;
+    color:var(--cyan-soft);font-size:22px;letter-spacing:.3px;
+}
+.tile.purple h3{color:var(--purple);}
+.tile p{margin:0;color:var(--soft);font-size:14px;line-height:1.55;}
+.tile ul{
+    margin:14px 0 0;padding:0;list-style:none;
+    color:var(--muted);font-size:13px;
+}
+.tile ul li{padding:4px 0;display:flex;gap:8px;align-items:flex-start;}
+.tile ul li:before{
+    content:"›";color:var(--cyan);font-weight:700;flex-shrink:0;
+}
+.tile.purple ul li:before{color:var(--purple);}
+.tile-cta{
     margin-top:18px;
+    display:inline-flex;align-items:center;gap:6px;
+    color:var(--cyan-soft);font-size:13px;font-weight:600;letter-spacing:.4px;
 }
+.tile.purple .tile-cta{color:var(--purple);}
 
-.panel-head{
-    display:flex;
-    justify-content:space-between;
-    align-items:flex-start;
-    gap:16px;
-    margin-bottom:14px;
+footer{
+    padding:18px 24px;color:var(--muted);font-size:11px;text-align:center;
+    border-top:1px solid var(--line);
 }
-
-.panel h2,
-.panel h3{
-    margin:0;
-    color:#e5f3ff;
-}
-
-.panel h2{
-    font-size:18px;
-}
-
-.panel h3{
-    font-size:15px;
-}
-
-.panel-note{
-    margin:5px 0 0;
-    color:var(--muted);
-    font-size:13px;
-}
-
-.kpi-grid{
-    display:grid;
-    grid-template-columns:repeat(4,minmax(160px,1fr));
-    gap:14px;
-    margin-bottom:18px;
-}
-
-.kpi{
-    position:relative;
-    min-height:150px;
-    padding:16px;
-    background:linear-gradient(180deg,#111d32,#0a1425);
-    border:1px solid var(--line);
-    border-radius:8px;
-    cursor:pointer;
-    overflow:hidden;
-    transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease;
-}
-
-.kpi:hover,
-.kpi:focus{
-    transform:translateY(-3px);
-    border-color:#4b80aa;
-    box-shadow:0 0 24px rgba(56,189,248,.22);
-}
-
-.kpi:before{
-    content:"";
-    position:absolute;
-    inset:0;
-    background:linear-gradient(120deg,transparent,rgba(56,189,248,.08),transparent);
-    transform:translateX(-100%);
-    animation:sweep 7s infinite;
-}
-
-.kpi-top{
-    display:flex;
-    justify-content:space-between;
-    gap:12px;
-    position:relative;
-}
-
-.kpi-title{
-    margin:0;
-    color:var(--soft);
-    font-size:13px;
-    letter-spacing:.8px;
-    text-transform:uppercase;
-}
-
-.trend{
-    color:var(--green);
-    font-size:12px;
-    font-weight:700;
-}
-
-.trend.warn{
-    color:var(--yellow);
-}
-
-.trend.bad{
-    color:var(--red);
-}
-
-.metric{
-    position:relative;
-    margin-top:14px;
-    font-size:clamp(32px,4.8vw,48px);
-    line-height:1;
-    font-weight:800;
-}
-
-.metric.small{
-    font-size:34px;
-}
-
-.kpi-sub{
-    position:relative;
-    margin:12px 0 0;
-    color:var(--muted);
-    font-size:13px;
-    line-height:1.4;
-}
-
-.spark{
-    position:absolute;
-    right:12px;
-    bottom:10px;
-    width:86px;
-    height:34px;
-}
-
-.good{
-    color:var(--green);
-}
-
-.warning{
-    color:var(--yellow);
-}
-
-.bad{
-    color:var(--red);
-}
-
-.blue{
-    color:var(--cyan-soft);
-}
-
-.mission-grid{
-    display:grid;
-    grid-template-columns:1.2fr .8fr;
-    gap:18px;
-}
-
-.chart-card{
-    min-height:360px;
-}
-
-.chart-row{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:18px;
-    margin-top:18px;
-}
-
-canvas{
-    display:block;
-    width:100%;
-    height:280px;
-}
-
-.mini-chart{
-    height:220px;
-}
-
-.decision-list{
-    display:grid;
-    gap:10px;
-}
-
-.decision{
-    display:grid;
-    grid-template-columns:96px 1fr auto;
-    gap:12px;
-    align-items:center;
-    padding:12px;
-    background:#0a1424;
-    border:1px solid var(--line);
-    border-radius:8px;
-}
-
-.decision strong{
-    color:#dbeafe;
-}
-
-.tag{
-    padding:5px 8px;
-    border:1px solid var(--line-bright);
-    border-radius:6px;
-    color:var(--cyan-soft);
-    font-size:12px;
-    white-space:nowrap;
-}
-
-.heatmap{
-    display:grid;
-    grid-template-columns:86px repeat(6,minmax(74px,1fr));
-    gap:7px;
-    overflow-x:auto;
-    padding-bottom:2px;
-}
-
-.heat-cell{
-    min-width:74px;
-    min-height:64px;
-    padding:9px;
-    background:#101c31;
-    border:1px solid rgba(148,163,184,.16);
-    border-radius:7px;
-    cursor:pointer;
-    transition:transform .2s ease,border-color .2s ease;
-}
-
-.heat-cell:hover,
-.heat-cell:focus{
-    transform:translateY(-2px);
-    border-color:#7dd3fc;
-}
-
-.heat-head{
-    min-height:auto;
-    color:var(--muted);
-    font-size:12px;
-    text-transform:uppercase;
-    letter-spacing:.7px;
-    cursor:default;
-}
-
-.station{
-    display:flex;
-    align-items:center;
-    color:#dbeafe;
-    font-weight:700;
-    cursor:default;
-}
-
-.risk-low{
-    background:linear-gradient(180deg,#14532d,#0f2d20);
-}
-
-.risk-med{
-    background:linear-gradient(180deg,#854d0e,#3c260b);
-}
-
-.risk-high{
-    background:linear-gradient(180deg,#991b1b,#3a1118);
-}
-
-.risk-severe{
-    background:linear-gradient(180deg,#be123c,#3b1020);
-    box-shadow:inset 0 0 0 1px rgba(251,113,133,.22),0 0 18px rgba(251,113,133,.13);
-}
-
-.risk-score{
-    display:block;
-    font-size:24px;
-    font-weight:800;
-}
-
-.risk-copy{
-    display:block;
-    margin-top:3px;
-    color:#dbeafe;
-    font-size:11px;
-    line-height:1.2;
-}
-
-.side-stack{
-    display:grid;
-    gap:18px;
-}
-
-.live-feed{
-    display:grid;
-    gap:10px;
-    max-height:310px;
-    overflow:auto;
-    padding-right:4px;
-}
-
-.event{
-    display:grid;
-    grid-template-columns:64px 1fr;
-    gap:10px;
-    padding:10px;
-    background:#08111f;
-    border:1px solid var(--line);
-    border-radius:8px;
-}
-
-.event-time{
-    color:var(--cyan-soft);
-    font-size:12px;
-    font-weight:700;
-}
-
-.event-text{
-    margin:0;
-    color:#dbeafe;
-    font-size:13px;
-    line-height:1.35;
-}
-
-.event-sev{
-    margin-top:5px;
-    color:var(--muted);
-    font-size:11px;
-    text-transform:uppercase;
-    letter-spacing:.8px;
-}
-
-.selector-row{
-    display:flex;
-    gap:10px;
-    flex-wrap:wrap;
-}
-
-select{
-    min-width:116px;
-    padding:10px 12px;
-    color:var(--text);
-    background:#07111f;
-    border:1px solid var(--line-bright);
-    border-radius:7px;
-}
-
-button{
-    padding:10px 14px;
-    color:white;
-    background:#1d4ed8;
-    border:1px solid #3b82f6;
-    border-radius:7px;
-    font-weight:700;
-    cursor:pointer;
-}
-
-button:hover,
-button:focus{
-    background:#2563eb;
-}
-
-.station-output{
-    margin:14px 0 0;
-    padding:13px;
-    color:#dbeafe;
-    background:#08111f;
-    border:1px solid var(--line);
-    border-radius:8px;
-    line-height:1.45;
-}
-
-.timeline{
-    display:grid;
-    gap:12px;
-}
-
-.timeline-row{
-    display:grid;
-    grid-template-columns:64px 1fr 42px;
-    gap:10px;
-    align-items:center;
-}
-
-.timeline-track{
-    height:11px;
-    background:#1e293b;
-    border-radius:999px;
-    overflow:hidden;
-}
-
-.timeline-fill{
-    height:100%;
-    border-radius:999px;
-}
-
-.fleet-map{
-    position:relative;
-    height:260px;
-    overflow:hidden;
-    background:
-        linear-gradient(90deg,rgba(148,163,184,.08) 1px,transparent 1px),
-        linear-gradient(rgba(148,163,184,.08) 1px,transparent 1px),
-        #06101d;
-    background-size:42px 42px;
-    border:1px solid var(--line);
-    border-radius:8px;
-}
-
-.route{
-    position:absolute;
-    height:2px;
-    transform-origin:left center;
-    background:linear-gradient(90deg,rgba(56,189,248,.08),rgba(56,189,248,.85));
-}
-
-.route.r2{
-    background:linear-gradient(90deg,rgba(250,204,21,.08),rgba(250,204,21,.85));
-}
-
-.route.r3{
-    background:linear-gradient(90deg,rgba(251,113,133,.08),rgba(251,113,133,.85));
-}
-
-.airport{
-    position:absolute;
-    width:52px;
-    padding:6px 0;
-    transform:translate(-50%,-50%);
-    text-align:center;
-    color:#dbeafe;
-    background:#0b1424;
-    border:1px solid var(--line-bright);
-    border-radius:7px;
-    font-size:12px;
-    font-weight:700;
-}
-
-.aircraft-dot{
-    position:absolute;
-    width:8px;
-    height:8px;
-    border-radius:50%;
-    background:var(--cyan);
-    box-shadow:0 0 14px var(--cyan);
-    animation:track 6s linear infinite;
-}
-
-.aircraft-dot.delay{
-    background:var(--yellow);
-    box-shadow:0 0 14px var(--yellow);
-    animation-duration:8s;
-}
-
-.rv-panel{
-    display:grid;
-    grid-template-columns:1.15fr .85fr;
-    gap:18px;
-}
-
-.rv-stats{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:10px;
-    margin:14px 0;
-}
-
-.rv-stat{
-    padding:12px;
-    background:#08111f;
-    border:1px solid var(--line);
-    border-radius:8px;
-}
-
-.bar{
-    height:12px;
-    overflow:hidden;
-    background:#1e293b;
-    border-radius:999px;
-    margin:8px 0 14px;
-}
-
-.fill{
-    height:100%;
-    border-radius:999px;
-}
-
-.rv-image{
-    display:grid;
-    align-content:center;
-    gap:12px;
-    text-align:center;
-    background:linear-gradient(145deg,#020617,#111d32);
-    border:1px solid var(--line);
-    border-radius:8px;
-    padding:16px;
-}
-
-.rv-image img{
-    width:100%;
-    border-radius:8px;
-}
-
-.footer{
-    padding:18px 24px 26px;
-    color:#8da3bd;
-    text-align:center;
-    border-top:1px solid rgba(148,163,184,.14);
-}
-
-@keyframes pulse{
-    70%{
-        box-shadow:0 0 0 10px rgba(52,211,153,0);
-    }
-    100%{
-        box-shadow:0 0 0 0 rgba(52,211,153,0);
-    }
-}
-
-@keyframes marquee{
-    from{
-        transform:translateX(0);
-    }
-    to{
-        transform:translateX(-50%);
-    }
-}
-
-@keyframes sweep{
-    0%,62%{
-        transform:translateX(-120%);
-    }
-    78%,100%{
-        transform:translateX(120%);
-    }
-}
-
-@keyframes track{
-    from{
-        transform:translate(0,0);
-    }
-    to{
-        transform:translate(160px,74px);
-    }
-}
-
-@media(max-width:1180px){
-    .topbar,
-    .layout,
-    .mission-grid,
-    .rv-panel{
-        grid-template-columns:1fr;
-    }
-
-    .kpi-grid{
-        grid-template-columns:repeat(2,minmax(160px,1fr));
-    }
-}
-
-@media(max-width:720px){
-    .topbar,
-    .layout{
-        padding-left:16px;
-        padding-right:16px;
-    }
-
-    .status-strip{
-        padding-left:16px;
-        padding-right:16px;
-    }
-
-    .ops-clock,
-    .kpi-grid,
-    .chart-row,
-    .rv-stats{
-        grid-template-columns:1fr;
-    }
-
-    .decision{
-        grid-template-columns:1fr;
-    }
-}
+footer strong{color:var(--soft);}
 </style>
 </head>
 <body>
-<div class="app">
-    <header class="topbar">
-        <div class="brand">
-            <h1>Billiot Advisory</h1>
-            <p>Executive Aviation Operations Intelligence Dashboard</p>
-        </div>
-        <div class="ops-clock">
-            <div class="clock-tile">
-                <span class="label">Zulu Time</span>
-                <span class="value" id="zuluTime">--:--Z</span>
-            </div>
-            <div class="clock-tile">
-                <span class="label">Ops Window</span>
-                <span class="value">A14 + Recovery</span>
-            </div>
-            <div class="clock-tile">
-                <span class="label">Network Load</span>
-                <span class="value warning" id="loadValue">76%</span>
-            </div>
-        </div>
-    </header>
 
-    <div class="status-strip">
-        <div class="status-pill"><span class="pulse"></span> NORMAL OPS</div>
-        <div class="status-pill"><span class="pulse warn"></span> WEST WEATHER WATCH</div>
-        <div class="marquee">
-            <span id="tickerText">DEN recovery program active | ORD ground delay program 42 min average | ASE VFR corridor risk elevated | EWR airspace metering | Crew legality watch: 12 flights | RV-14 ready | DEN recovery program active | ORD ground delay program 42 min average | ASE VFR corridor risk elevated | EWR airspace metering | Crew legality watch: 12 flights | RV-14 ready | </span>
-        </div>
-    </div>
-
-    <main class="layout">
-        <section>
-            <div class="kpi-grid">
-                <article class="kpi" tabindex="0" onclick="setDetail('Network OTP is 91.4%. DEN and IAH are carrying recovery well, but ORD and EWR remain exposed during the evening bank.')" onkeydown="cardKey(event,'Network OTP is 91.4%. DEN and IAH are carrying recovery well, but ORD and EWR remain exposed during the evening bank.')">
-                    <div class="kpi-top">
-                        <p class="kpi-title">Network OTP</p>
-                        <span class="trend">+2.1 pts</span>
-                    </div>
-                    <div class="metric good">91.4%</div>
-                    <p class="kpi-sub">D0/A14 performance, rolling 7-day weighted view</p>
-                    <canvas class="spark" id="sparkOtp"></canvas>
-                </article>
-
-                <article class="kpi" tabindex="0" onclick="setDetail('Delay propagation is moderate. ORD is the primary driver, with DEN recovery pressure rising after 1800Z.')" onkeydown="cardKey(event,'Delay propagation is moderate. ORD is the primary driver, with DEN recovery pressure rising after 1800Z.')">
-                    <div class="kpi-top">
-                        <p class="kpi-title">Propagation Index</p>
-                        <span class="trend warn">+8 risk</span>
-                    </div>
-                    <div class="metric warning">64</div>
-                    <p class="kpi-sub">Hub-to-hub carryover risk based on gates, crews, and flow</p>
-                    <canvas class="spark" id="sparkDelay"></canvas>
-                </article>
-
-                <article class="kpi" tabindex="0" onclick="setDetail('Crew legality risk is elevated. 12 flights sit inside the two-hour legality watch window, mainly ORD and EWR arrivals.')" onkeydown="cardKey(event,'Crew legality risk is elevated. 12 flights sit inside the two-hour legality watch window, mainly ORD and EWR arrivals.')">
-                    <div class="kpi-top">
-                        <p class="kpi-title">Crew Legality</p>
-                        <span class="trend bad">12 watches</span>
-                    </div>
-                    <div class="metric bad">12</div>
-                    <p class="kpi-sub">Flights near legal threshold before recovery decisions</p>
-                    <canvas class="spark" id="sparkCrew"></canvas>
-                </article>
-
-                <article class="kpi" tabindex="0" onclick="setDetail('RV-14 module is active. Aircraft is flight ready, with Aspen VFR sensitivity flagged for route planning.')" onkeydown="cardKey(event,'RV-14 module is active. Aircraft is flight ready, with Aspen VFR sensitivity flagged for route planning.')">
-                    <div class="kpi-top">
-                        <p class="kpi-title">RV-14 Module</p>
-                        <span class="trend">Ready</span>
-                    </div>
-                    <div class="metric small good">Flight Ready</div>
-                    <p class="kpi-sub">Owner/operator readiness, utilization, and weather exposure</p>
-                    <canvas class="spark" id="sparkRv"></canvas>
-                </article>
-            </div>
-
-            <div class="mission-grid">
-                <div class="panel chart-card">
-                    <div class="panel-head">
-                        <div>
-                            <h2>Network Performance Board</h2>
-                            <p class="panel-note">OTP, delay minutes, and recovery confidence by operating day</p>
-                        </div>
-                        <span class="tag">Live refresh 15 sec</span>
-                    </div>
-                    <canvas id="performanceChart"></canvas>
-                </div>
-
-                <div class="panel">
-                    <div class="panel-head">
-                        <div>
-                            <h2>Executive Decision Queue</h2>
-                            <p class="panel-note">Current OCC choices ranked by operational impact</p>
-                        </div>
-                    </div>
-                    <div class="decision-list">
-                        <div class="decision">
-                            <strong>ORD</strong>
-                            <span>Hold two departures 18 minutes to protect downstream crews.</span>
-                            <span class="tag">High</span>
-                        </div>
-                        <div class="decision">
-                            <strong>DEN</strong>
-                            <span>Keep recovery bank intact. Recheck gate 34 conflict at 1910Z.</span>
-                            <span class="tag">Med</span>
-                        </div>
-                        <div class="decision">
-                            <strong>ASE</strong>
-                            <span>Flag VFR routing sensitivity for owner/operator departures.</span>
-                            <span class="tag">Med</span>
-                        </div>
-                        <div class="decision">
-                            <strong>EWR</strong>
-                            <span>Monitor airspace metering. Avoid extra swaps before 2200Z.</span>
-                            <span class="tag">Med</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="chart-row">
-                <div class="panel">
-                    <div class="panel-head">
-                        <div>
-                            <h2>Risk Distribution</h2>
-                            <p class="panel-note">Flights by risk class, weighted by passenger and crew impact</p>
-                        </div>
-                    </div>
-                    <canvas class="mini-chart" id="riskChart"></canvas>
-                </div>
-
-                <div class="panel">
-                    <div class="panel-head">
-                        <div>
-                            <h2>Recovery Timeline</h2>
-                            <p class="panel-note">Actions underway across the next operating window</p>
-                        </div>
-                    </div>
-                    <div class="timeline">
-                        <div class="timeline-row">
-                            <span>1800Z</span>
-                            <div class="timeline-track"><div class="timeline-fill" style="width:72%;background:#38bdf8;"></div></div>
-                            <span>DEN</span>
-                        </div>
-                        <div class="timeline-row">
-                            <span>1900Z</span>
-                            <div class="timeline-track"><div class="timeline-fill" style="width:58%;background:#facc15;"></div></div>
-                            <span>ORD</span>
-                        </div>
-                        <div class="timeline-row">
-                            <span>2030Z</span>
-                            <div class="timeline-track"><div class="timeline-fill" style="width:41%;background:#fb923c;"></div></div>
-                            <span>EWR</span>
-                        </div>
-                        <div class="timeline-row">
-                            <span>2200Z</span>
-                            <div class="timeline-track"><div class="timeline-fill" style="width:35%;background:#34d399;"></div></div>
-                            <span>LAX</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="panel">
-                <div class="panel-head">
-                    <div>
-                        <h2>Station Delay Heatmap</h2>
-                        <p class="panel-note">Risk score combines average delay, recovery capacity, crew pressure, gate pressure, and weather exposure</p>
-                    </div>
-                    <span class="tag">Score 0-100</span>
-                </div>
-                <div class="heatmap" id="heatmap"></div>
-            </div>
-
-            <div class="panel rv-panel">
-                <div>
-                    <div class="panel-head">
-                        <div>
-                            <h2>Van's RV-14 Owner/Operator Module</h2>
-                            <p class="panel-note">Private aviation readiness stays visible inside the same operating picture</p>
-                        </div>
-                        <span class="tag good">Ready</span>
-                    </div>
-                    <p>Aircraft readiness, utilization, maintenance posture, and flight-risk visibility remain active for owner/operator planning.</p>
-                    <div class="rv-stats">
-                        <div class="rv-stat">
-                            <span class="label">Status</span>
-                            <span class="value good">Flight Ready</span>
-                        </div>
-                        <div class="rv-stat">
-                            <span class="label">Inspection</span>
-                            <span class="value">18 hrs</span>
-                        </div>
-                        <div class="rv-stat">
-                            <span class="label">Month Use</span>
-                            <span class="value blue">6.2 hrs</span>
-                        </div>
-                    </div>
-                    <h3>Fuel Status</h3>
-                    <div class="bar"><div class="fill" style="width:82%;background:#34d399;"></div></div>
-                    <h3>Maintenance Readiness</h3>
-                    <div class="bar"><div class="fill" style="width:91%;background:#38bdf8;"></div></div>
-                    <h3>Route Risk</h3>
-                    <div class="bar"><div class="fill" style="width:46%;background:#facc15;"></div></div>
-                    <p class="station-output">Operational note: Aspen VFR corridor risk remains elevated. Check ceiling, winds aloft, and alternates before release.</p>
-                </div>
-                <div class="rv-image">
-                    <h2>RV-14</h2>
-                    <img src="rv14.png" alt="RV-14 aircraft">
-                    <p class="panel-note">Experimental aircraft operational visibility</p>
-                </div>
-            </div>
-        </section>
-
-        <aside class="side-stack">
-            <div class="panel">
-                <div class="panel-head">
-                    <div>
-                        <h2>Operational Detail</h2>
-                        <p class="panel-note">Click a KPI or heatmap cell for interpretation</p>
-                    </div>
-                </div>
-                <p class="station-output" id="detailText">Network operating posture is normal with elevated western weather watch and ORD delay propagation risk.</p>
-            </div>
-
-            <div class="panel">
-                <div class="panel-head">
-                    <div>
-                        <h2>Station Intelligence</h2>
-                        <p class="panel-note">Fast station readout for executive review</p>
-                    </div>
-                </div>
-                <div class="selector-row">
-                    <select id="stationSelect">
-                        <option>DEN</option>
-                        <option>ORD</option>
-                        <option>IAH</option>
-                        <option>EWR</option>
-                        <option>LAX</option>
-                        <option>ASE</option>
-                    </select>
-                    <button onclick="stationUpdate()">Analyze</button>
-                </div>
-                <p class="station-output" id="stationOutput">DEN: Recovery pressure is elevated but manageable. Watch weather, gate availability, and evening bank density.</p>
-            </div>
-
-            <div class="panel">
-                <div class="panel-head">
-                    <div>
-                        <h2>Live OCC Event Stream</h2>
-                        <p class="panel-note">Simulated live alerts for operational tempo</p>
-                    </div>
-                    <span class="tag" id="eventCount">8 active</span>
-                </div>
-                <div class="live-feed" id="liveFeed"></div>
-            </div>
-
-            <div class="panel">
-                <div class="panel-head">
-                    <div>
-                        <h2>Network Flow Monitor</h2>
-                        <p class="panel-note">Representative aircraft movement and hub pressure</p>
-                    </div>
-                </div>
-                <div class="fleet-map">
-                    <div class="route" style="left:120px;top:78px;width:205px;transform:rotate(22deg);"></div>
-                    <div class="route r2" style="left:185px;top:166px;width:190px;transform:rotate(-18deg);"></div>
-                    <div class="route r3" style="left:82px;top:196px;width:238px;transform:rotate(-34deg);"></div>
-                    <div class="airport" style="left:22%;top:74%;">LAX</div>
-                    <div class="airport" style="left:45%;top:45%;">DEN</div>
-                    <div class="airport" style="left:70%;top:35%;">ORD</div>
-                    <div class="airport" style="left:84%;top:56%;">EWR</div>
-                    <div class="airport" style="left:34%;top:24%;">ASE</div>
-                    <div class="aircraft-dot" style="left:122px;top:76px;"></div>
-                    <div class="aircraft-dot delay" style="left:188px;top:164px;"></div>
-                </div>
-            </div>
-        </aside>
-    </main>
-
-    <footer class="footer">
-        Built for operational resilience, executive aviation visibility, and decision-support intelligence.
-    </footer>
+<div class="topbar">
+    <h1>Billiot Advisory</h1>
+    <p>Executive decision-support dashboards</p>
 </div>
 
-<script>
-const stations = {
-    DEN:"DEN: Recovery pressure is elevated but manageable. Watch weather, gate availability, and evening bank density.",
-    ORD:"ORD: High delay propagation risk. Protect crew legality first, then tune gate flow for late arrivals.",
-    IAH:"IAH: Stable operation with moderate convective exposure. Keep spare turn capacity available.",
-    EWR:"EWR: Airspace congestion risk is elevated. Avoid extra swaps until metering improves.",
-    LAX:"LAX: Ground flow is stable. Turn performance sits slightly below target on narrowbody arrivals.",
-    ASE:"ASE: Mountain weather sensitivity is elevated for VFR operations. Confirm alternates before release."
-};
+<div class="main">
+    <div class="intro">
+        <h2>Choose a dashboard</h2>
+        <p>Two purpose-built tools — one for running the operation, one for running the business.</p>
+    </div>
 
-const heatRows = [
-    { station:"DEN", scores:[28,46,62,78,64,39], notes:["DEN 0600Z stable. Recovery capacity available.","DEN 1000Z weather watch increasing.","DEN 1400Z inbound bank density building.","DEN 1800Z delay propagation elevated.","DEN 2200Z late recovery active.","DEN 0200Z flow returning to normal."] },
-    { station:"ORD", scores:[48,56,68,86,91,74], notes:["ORD 0600Z gate utilization elevated.","ORD 1000Z runway program reducing throughput.","ORD 1400Z GDP delays increasing.","ORD 1800Z severe disruption risk.","ORD 2200Z crew legality pressure high.","ORD 0200Z recovery still constrained."] },
-    { station:"IAH", scores:[18,24,37,42,31,22], notes:["IAH 0600Z stable.","IAH 1000Z light weather exposure.","IAH 1400Z moderate turn pressure.","IAH 1800Z controlled flow risk.","IAH 2200Z improving.","IAH 0200Z normal recovery posture."] },
-    { station:"EWR", scores:[44,58,72,84,79,63], notes:["EWR 0600Z airspace metering active.","EWR 1000Z congestion rising.","EWR 1400Z arrival spacing constrained.","EWR 1800Z high delay carryover risk.","EWR 2200Z recovery still exposed.","EWR 0200Z moderate residual risk."] },
-    { station:"LAX", scores:[22,29,34,41,38,27], notes:["LAX 0600Z stable.","LAX 1000Z turn times slightly below target.","LAX 1400Z gate flow acceptable.","LAX 1800Z mild departure queue.","LAX 2200Z stable westbound flow.","LAX 0200Z normal ops."] },
-    { station:"ASE", scores:[36,49,66,76,61,45], notes:["ASE 0600Z mountain weather watch active.","ASE 1000Z VFR sensitivity increasing.","ASE 1400Z corridor risk elevated.","ASE 1800Z high VFR operational risk.","ASE 2200Z improving with caution.","ASE 0200Z weather still needs review."] }
-];
+    <div class="tiles">
+        <a class="tile" href="aviation.html">
+            <span class="tile-tag">Operations</span>
+            <h3>Aviation Operations Intelligence</h3>
+            <p>Executive view of OTP, delay propagation, crew legality, station performance, and OCC decision support.</p>
+            <ul>
+                <li>On-time performance trend monitoring</li>
+                <li>Delay propagation &amp; disruption intelligence</li>
+                <li>Crew legality risk visibility</li>
+                <li>Station &amp; network performance</li>
+            </ul>
+            <span class="tile-cta">Open dashboard →</span>
+        </a>
 
-const eventTemplates = [
-    { time:"18:05Z", text:"DEN gate 34 conflict cleared. Recovery bank remains intact.", sev:"recovery" },
-    { time:"18:11Z", text:"ORD GDP delay average moved from 37 to 42 minutes.", sev:"flow control" },
-    { time:"18:18Z", text:"ASE VFR corridor flagged for ceilings and winds aloft review.", sev:"weather" },
-    { time:"18:26Z", text:"EWR arrival spacing tightened. No swap action recommended yet.", sev:"airspace" },
-    { time:"18:34Z", text:"Crew legality watch reduced by one after ORD hotel recovery change.", sev:"crew" },
-    { time:"18:42Z", text:"IAH spare aircraft remains available for protection through 2130Z.", sev:"fleet" },
-    { time:"18:49Z", text:"LAX narrowbody turn time sits 4 minutes below target.", sev:"turn" },
-    { time:"18:56Z", text:"RV-14 module updated. Fuel 82%, maintenance readiness 91%.", sev:"owner/operator" }
-];
+        <a class="tile purple" href="pipeline.html">
+            <span class="tile-tag">Revenue</span>
+            <h3>Sales Pipeline Risk</h3>
+            <p>Drop your pipeline and meetings. Instantly see which deals are at risk, what's stuck, and your next move on each one.</p>
+            <ul>
+                <li>Risk scoring from close-date, activity &amp; stage age</li>
+                <li>Stuck-deal detection vs. typical stage velocity</li>
+                <li>Rule-based next-move recommendations</li>
+                <li>Local CSV processing — nothing leaves your browser</li>
+            </ul>
+            <span class="tile-cta">Open dashboard →</span>
+        </a>
+    </div>
+</div>
 
-const detail = document.getElementById("detailText");
-const stationSelect = document.getElementById("stationSelect");
-const stationOutput = document.getElementById("stationOutput");
-const liveFeed = document.getElementById("liveFeed");
+<footer>
+    <strong>Billiot Advisory</strong> &middot; Built for operational resilience and revenue clarity
+</footer>
 
-function setDetail(text){
-    detail.innerText = text;
-}
-
-function cardKey(event,text){
-    if(event.key === "Enter" || event.key === " "){
-        event.preventDefault();
-        setDetail(text);
-    }
-}
-
-function heatmapKey(event,text){
-    if(event.key === "Enter" || event.key === " "){
-        event.preventDefault();
-        setDetail(text);
-    }
-}
-
-function stationUpdate(){
-    stationOutput.innerText = stations[stationSelect.value];
-    setDetail(stations[stationSelect.value]);
-}
-
-function riskClass(score){
-    if(score >= 85) return "risk-severe";
-    if(score >= 70) return "risk-high";
-    if(score >= 45) return "risk-med";
-    return "risk-low";
-}
-
-function renderHeatmap(){
-    const heatmap = document.getElementById("heatmap");
-    const times = ["Station","0600Z","1000Z","1400Z","1800Z","2200Z","0200Z"];
-    heatmap.innerHTML = times.map(time => `<div class="heat-cell heat-head">${time}</div>`).join("");
-
-    heatRows.forEach(row => {
-        heatmap.insertAdjacentHTML("beforeend",`<div class="heat-cell station">${row.station}</div>`);
-        row.scores.forEach((score,index) => {
-            const note = row.notes[index];
-            const cell = document.createElement("div");
-            cell.className = `heat-cell ${riskClass(score)}`;
-            cell.tabIndex = 0;
-            cell.innerHTML = `<span class="risk-score">${score}</span><span class="risk-copy">${score >= 85 ? "Severe" : score >= 70 ? "High" : score >= 45 ? "Med" : "Low"}</span>`;
-            cell.addEventListener("click",() => setDetail(note));
-            cell.addEventListener("keydown",event => heatmapKey(event,note));
-            heatmap.appendChild(cell);
-        });
-    });
-}
-
-function renderFeed(){
-    liveFeed.innerHTML = eventTemplates.map(event => `
-        <div class="event">
-            <div class="event-time">${event.time}</div>
-            <div>
-                <p class="event-text">${event.text}</p>
-                <div class="event-sev">${event.sev}</div>
-            </div>
-        </div>
-    `).join("");
-}
-
-function updateClock(){
-    const now = new Date();
-    document.getElementById("zuluTime").innerText = now.toISOString().slice(11,16) + "Z";
-    const load = 74 + Math.round(Math.sin(Date.now() / 18000) * 3);
-    document.getElementById("loadValue").innerText = load + "%";
-}
-
-function setupCanvas(canvas,height){
-    const ratio = window.devicePixelRatio || 1;
-    const width = canvas.parentElement.clientWidth;
-    canvas.width = width * ratio;
-    canvas.height = height * ratio;
-    canvas.style.height = height + "px";
-    const ctx = canvas.getContext("2d");
-    ctx.setTransform(ratio,0,0,ratio,0,0);
-    return { ctx, width, height };
-}
-
-function drawGrid(ctx,width,height,left,top,right,bottom){
-    ctx.strokeStyle = "rgba(148,163,184,.14)";
-    ctx.lineWidth = 1;
-    for(let i = 0; i <= 4; i++){
-        const y = top + ((bottom - top) / 4) * i;
-        ctx.beginPath();
-        ctx.moveTo(left,y);
-        ctx.lineTo(right,y);
-        ctx.stroke();
-    }
-    for(let i = 0; i <= 6; i++){
-        const x = left + ((right - left) / 6) * i;
-        ctx.beginPath();
-        ctx.moveTo(x,top);
-        ctx.lineTo(x,bottom);
-        ctx.stroke();
-    }
-}
-
-function drawLine(ctx,data,color,left,top,right,bottom,min,max,label){
-    const step = (right - left) / (data.length - 1);
-    ctx.beginPath();
-    ctx.strokeStyle = color;
-    ctx.lineWidth = 3;
-    data.forEach((value,index) => {
-        const x = left + index * step;
-        const y = bottom - ((value - min) / (max - min)) * (bottom - top);
-        if(index === 0) ctx.moveTo(x,y);
-        else ctx.lineTo(x,y);
-    });
-    ctx.stroke();
-
-    data.forEach((value,index) => {
-        const x = left + index * step;
-        const y = bottom - ((value - min) / (max - min)) * (bottom - top);
-        ctx.beginPath();
-        ctx.arc(x,y,4,0,Math.PI * 2);
-        ctx.fillStyle = color;
-        ctx.fill();
-    });
-
-    ctx.fillStyle = color;
-    ctx.font = "12px Arial";
-    ctx.fillText(label,right - 95,top + (label === "OTP" ? 14 : 32));
-}
-
-function drawPerformanceChart(){
-    const canvas = document.getElementById("performanceChart");
-    const { ctx, width, height } = setupCanvas(canvas,300);
-    const left = 48;
-    const top = 24;
-    const right = width - 22;
-    const bottom = height - 44;
-    const labels = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
-    const otp = [88,90,87,91,92,89,91];
-    const recovery = [72,76,68,82,86,75,84];
-    const delays = [34,28,49,25,21,38,29];
-
-    ctx.clearRect(0,0,width,height);
-    drawGrid(ctx,width,height,left,top,right,bottom);
-
-    const barWidth = Math.max(14,(right - left) / labels.length * .38);
-    labels.forEach((label,index) => {
-        const x = left + ((right - left) / (labels.length - 1)) * index;
-        const barHeight = delays[index] * 2.2;
-        ctx.fillStyle = delays[index] > 42 ? "rgba(251,113,133,.72)" : "rgba(250,204,21,.64)";
-        ctx.fillRect(x - barWidth / 2,bottom - barHeight,barWidth,barHeight);
-        ctx.fillStyle = "#9fb1c8";
-        ctx.font = "12px Arial";
-        ctx.fillText(label,x - 10,bottom + 24);
-    });
-
-    drawLine(ctx,otp,"#38bdf8",left,top,right,bottom,60,100,"OTP");
-    drawLine(ctx,recovery,"#34d399",left,top,right,bottom,60,100,"Recovery");
-
-    ctx.fillStyle = "#9fb1c8";
-    ctx.font = "12px Arial";
-    ctx.fillText("Delay minutes shown as bars",left,18);
-}
-
-function drawRiskChart(){
-    const canvas = document.getElementById("riskChart");
-    const { ctx, width, height } = setupCanvas(canvas,220);
-    const centerX = width * .36;
-    const centerY = height * .52;
-    const radius = Math.min(width,height) * .32;
-    const values = [
-        { label:"Low", value:42, color:"#34d399" },
-        { label:"Moderate", value:31, color:"#facc15" },
-        { label:"High", value:19, color:"#fb923c" },
-        { label:"Severe", value:8, color:"#fb7185" }
-    ];
-    let start = -Math.PI / 2;
-    const total = values.reduce((sum,item) => sum + item.value,0);
-
-    ctx.clearRect(0,0,width,height);
-    values.forEach(item => {
-        const angle = (item.value / total) * Math.PI * 2;
-        ctx.beginPath();
-        ctx.moveTo(centerX,centerY);
-        ctx.arc(centerX,centerY,radius,start,start + angle);
-        ctx.closePath();
-        ctx.fillStyle = item.color;
-        ctx.fill();
-        start += angle;
-    });
-
-    ctx.beginPath();
-    ctx.arc(centerX,centerY,radius * .58,0,Math.PI * 2);
-    ctx.fillStyle = "#101c31";
-    ctx.fill();
-    ctx.fillStyle = "#eef6ff";
-    ctx.font = "700 24px Arial";
-    ctx.fillText("142",centerX - 22,centerY + 4);
-    ctx.font = "12px Arial";
-    ctx.fillStyle = "#9fb1c8";
-    ctx.fillText("flights",centerX - 18,centerY + 22);
-
-    values.forEach((item,index) => {
-        const x = width * .68;
-        const y = 54 + index * 32;
-        ctx.fillStyle = item.color;
-        ctx.fillRect(x,y - 10,12,12);
-        ctx.fillStyle = "#dbeafe";
-        ctx.font = "13px Arial";
-        ctx.fillText(`${item.label} ${item.value}%`,x + 20,y);
-    });
-}
-
-function drawSpark(canvasId,data,color){
-    const canvas = document.getElementById(canvasId);
-    const ratio = window.devicePixelRatio || 1;
-    canvas.width = canvas.clientWidth * ratio;
-    canvas.height = canvas.clientHeight * ratio;
-    const ctx = canvas.getContext("2d");
-    ctx.setTransform(ratio,0,0,ratio,0,0);
-    const width = canvas.clientWidth;
-    const height = canvas.clientHeight;
-    const min = Math.min(...data) - 2;
-    const max = Math.max(...data) + 2;
-    ctx.clearRect(0,0,width,height);
-    ctx.beginPath();
-    ctx.strokeStyle = color;
-    ctx.lineWidth = 2;
-    data.forEach((value,index) => {
-        const x = (width / (data.length - 1)) * index;
-        const y = height - ((value - min) / (max - min)) * height;
-        if(index === 0) ctx.moveTo(x,y);
-        else ctx.lineTo(x,y);
-    });
-    ctx.stroke();
-}
-
-function drawAllCharts(){
-    drawPerformanceChart();
-    drawRiskChart();
-    drawSpark("sparkOtp",[84,86,85,89,91,90,92],"#34d399");
-    drawSpark("sparkDelay",[42,48,52,58,64,61,66],"#facc15");
-    drawSpark("sparkCrew",[7,8,9,11,12,10,12],"#fb7185");
-    drawSpark("sparkRv",[80,81,82,86,88,90,91],"#38bdf8");
-}
-
-function rotateFeed(){
-    const first = eventTemplates.shift();
-    eventTemplates.push(first);
-    renderFeed();
-}
-
-renderHeatmap();
-renderFeed();
-updateClock();
-drawAllCharts();
-
-setInterval(updateClock,1000);
-setInterval(rotateFeed,7000);
-window.addEventListener("resize",drawAllCharts);
-</script>
 </body>
 </html>
